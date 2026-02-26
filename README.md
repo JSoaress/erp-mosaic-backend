@@ -1,4 +1,4 @@
-# Boilerplate Node.js
+# ERP Mosaic
 
 Este projeto é um boilerplate para aplicações Node.js, fornecendo uma estrutura inicial para desenvolvimento rápido e organizado.
 
@@ -12,7 +12,7 @@ yarn upgrade-interactive --latest
 
 ## Requisitos
 
--   Node.js >= 20
+-   Node.js >= 22
 -   Yarn
 
 ## Instalação
