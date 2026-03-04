@@ -1,10 +1,11 @@
 import { beforeAll, describe, expect, test } from "vitest";
 
+import { ModuleRegistry } from "@/core/module/module-registry";
 import knexConfig from "@/shared/infra/database/knex/knexfile";
 import { KnexUnitOfWork } from "@/shared/infra/database/knex/repositories";
 import { IRepositoryFactory } from "@/system/application/repositories/repository-factory";
 import { Subscriber } from "@/system/domain/entities/subscriber";
-import { KnexRepositoryFactory } from "@/system/infra/database/knex";
+import { SystemKnexRepositoryFactory } from "@/system/infra/database/knex";
 
 import { SubscribeToPlanUseCase } from "./subscribe-to-plan.usecase";
 import { SubscribeToPlanUseCaseInput } from "./subscribe-to-plan.usecase.types";
@@ -14,8 +15,9 @@ let useCase: SubscribeToPlanUseCase;
 
 describe("subscribe to plan use case", () => {
     beforeAll(() => {
-        repositoryFactory = new KnexRepositoryFactory(knexConfig.development);
-        useCase = new SubscribeToPlanUseCase({ repositoryFactory });
+        repositoryFactory = new SystemKnexRepositoryFactory(knexConfig.development);
+        const moduleRegistry = new ModuleRegistry();
+        useCase = new SubscribeToPlanUseCase({ repositoryFactory, moduleRegistry });
     });
 
     test("should subscribe and create schema", async () => {
@@ -23,6 +25,7 @@ describe("subscribe to plan use case", () => {
             name: "John Doe",
             document: "12345678900",
             isTrial: true,
+            enabledModules: ["users", "financial"],
         };
         const response = await useCase.execute(input);
         expect(response.isRight()).toBeTruthy();

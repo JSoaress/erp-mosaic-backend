@@ -16,16 +16,16 @@ export class SubscribeToPlanUseCase extends UseCase<SubscribeToPlanUseCaseInput,
     private subscriberRepository: ISubscriberRepository;
     private tenantRepository: ITenantRepository;
 
-    constructor({ repositoryFactory }: SubscribeToPlanUseCaseGateway) {
+    constructor(private gateway: SubscribeToPlanUseCaseGateway) {
         super();
-        this.unitOfWork = repositoryFactory.createUnitOfWork();
-        this.subscriberRepository = repositoryFactory.createSubscriberRepository();
-        this.tenantRepository = repositoryFactory.createTenantRepository();
+        this.unitOfWork = gateway.repositoryFactory.createUnitOfWork();
+        this.subscriberRepository = gateway.repositoryFactory.createSubscriberRepository();
+        this.tenantRepository = gateway.repositoryFactory.createTenantRepository();
         this.unitOfWork.prepare(this.subscriberRepository, this.tenantRepository);
     }
 
-    protected impl({ isTrial, ...input }: SubscribeToPlanUseCaseInput): Promise<SubscribeToPlanUseCaseOutput> {
-        return this.unitOfWork.execute<SubscribeToPlanUseCaseOutput>(async () => {
+    protected async impl({ isTrial, ...input }: SubscribeToPlanUseCaseInput): Promise<SubscribeToPlanUseCaseOutput> {
+        const r = await this.unitOfWork.execute<SubscribeToPlanUseCaseOutput>(async () => {
             const subscriberOrError = Subscriber.create(input);
             if (subscriberOrError.isLeft()) return left(subscriberOrError.value);
             if (isTrial) console.log("plano de teste");
@@ -34,5 +34,14 @@ export class SubscribeToPlanUseCase extends UseCase<SubscribeToPlanUseCaseInput,
             await this.tenantRepository.createTenant(newSubscriber.getTenant());
             return right(newSubscriber);
         });
+        if (r.isLeft()) return left(r.value);
+        const uow = this.gateway.repositoryFactory.createUnitOfWork(r.value.getTenant());
+        const tenantRepo = this.gateway.repositoryFactory.createTenantRepository();
+        uow.prepare(tenantRepo);
+        await uow.execute(async () => {
+            const migrationsPath = input.enabledModules.map((module) => this.gateway.moduleRegistry.get(module).migrations);
+            await tenantRepo.runMigrations(migrationsPath);
+        });
+        return r;
     }
 }
