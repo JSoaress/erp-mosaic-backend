@@ -5,5 +5,6 @@ export type KnexSubscriberDTO = KnexModel & {
     document: string;
     started_at: Date;
     end_at: Nullable<Date>;
+    enabled_modules: string;
     is_active: boolean;
 };

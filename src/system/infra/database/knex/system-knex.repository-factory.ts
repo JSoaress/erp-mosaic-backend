@@ -7,7 +7,7 @@ import { ISubscriberRepository, ITenantRepository } from "@/system/application/r
 import { IRepositoryFactory } from "@/system/application/repositories/repository-factory";
 import { Tenant } from "@/system/domain/entities/tenant";
 
-import * as mappers from "../mappers";
+import * as mappers from "./mappers";
 import * as repos from "./repositories";
 
 export class SystemKnexRepositoryFactory implements IRepositoryFactory {

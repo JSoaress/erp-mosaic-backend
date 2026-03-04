@@ -1,7 +1,7 @@
 import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
 import { Subscriber } from "@/system/domain/entities/subscriber";
 
-import { KnexSubscriberDTO } from "../knex/models";
+import { KnexSubscriberDTO } from "../models";
 
 export class SubscriberKnexMapper extends AbstractMapper<Subscriber, KnexSubscriberDTO> {
     readonly config: TableFilterConfig<Subscriber, KnexSubscriberDTO> = {
@@ -11,6 +11,11 @@ export class SubscriberKnexMapper extends AbstractMapper<Subscriber, KnexSubscri
             document: { columnName: "document" },
             startedAt: { columnName: "started_at" },
             endAt: { columnName: "end_at" },
+            enabledModules: {
+                columnName: "enabled_modules",
+                toDomain: (p) => p.enabled_modules.split(","),
+                toPersistence: (d) => d.get("enabledModules").join(","),
+            },
             active: { columnName: "is_active" },
         },
     };
