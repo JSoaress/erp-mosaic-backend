@@ -1,6 +1,7 @@
 import { ModuleRegistry } from "@/core/module/module-registry";
 
 import { IRepositoryFactory } from "../repositories/repository-factory";
+import { GetSubscriberUseCase } from "../use-cases/subscriber/get-subscriber";
 import { SubscribeToPlanUseCase } from "../use-cases/subscriber/subscribe-to-plan";
 
 export class SystemUseCaseFactory {
@@ -14,5 +15,9 @@ export class SystemUseCaseFactory {
             repositoryFactory: this.repositoryFactory,
             moduleRegistry: this.moduleRegistry,
         });
+    }
+
+    getSubscriberUseCase(): GetSubscriberUseCase {
+        return new GetSubscriberUseCase({ repositoryFactory: this.repositoryFactory });
     }
 }
