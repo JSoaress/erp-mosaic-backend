@@ -81,3 +81,25 @@ export class EmailTakenError extends MosaicError {
         super(`O email "${email}" já está em uso por outro usuário.`, true);
     }
 }
+
+export class NotFoundModelError extends MosaicError {
+    constructor(
+        model: string,
+        readonly pk: unknown,
+    ) {
+        super(`O objeto do tipo "${model}" não foi encontrado.`, true);
+    }
+
+    toJSON(): Record<string, unknown> {
+        return {
+            ...super.toJSON(),
+            pk: this.pk,
+        };
+    }
+}
+
+export class TenantIdNotProvidedError extends MosaicError {
+    constructor() {
+        super("O 'tenantId' não foi fornecido.", true);
+    }
+}
