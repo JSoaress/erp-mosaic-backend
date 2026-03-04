@@ -51,3 +51,33 @@ export class ValidationError extends MosaicError {
         };
     }
 }
+
+export class InvalidPasswordError extends MosaicError {
+    constructor(message: string) {
+        super(message, true);
+    }
+}
+
+export class InvalidUserError extends MosaicError {
+    constructor() {
+        super("O usuário está inválido", true);
+    }
+}
+
+export class InvalidCredentialsError extends MosaicError {
+    constructor() {
+        super("Credenciais inválidas.", true);
+    }
+}
+
+export class InvalidTokenError extends MosaicError {
+    constructor(message = "Token inválido.") {
+        super(message, true);
+    }
+}
+
+export class EmailTakenError extends MosaicError {
+    constructor(email: string) {
+        super(`O email "${email}" já está em uso por outro usuário.`, true);
+    }
+}
