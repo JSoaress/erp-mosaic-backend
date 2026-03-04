@@ -4,6 +4,7 @@ import { z } from "@/shared/infra/libs/zod";
 export const SubscriberSchema = z.object({
     name: z.preprocess((e: string) => e.trim(), z.string().min(1).max(50)),
     document: z.string().min(1),
+    enabledModules: z.array(z.string().min(1)).min(1),
 });
 
 type Schema = typeof SubscriberSchema;
@@ -15,6 +16,6 @@ export type SubscriberDTO = EntityProps &
         active: boolean;
     };
 
-export type CreateSubscriberDTO = Pick<SubscriberDTO, "name" | "document">;
+export type CreateSubscriberDTO = Pick<SubscriberDTO, "name" | "document" | "enabledModules">;
 
 export type RestoreSubscriberDTO = SubscriberDTO;
