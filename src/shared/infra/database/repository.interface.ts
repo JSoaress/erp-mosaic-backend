@@ -2,9 +2,10 @@
 import { IRepository as IBaseRepository, ISetUnitOfWork, UnitOfWork } from "ts-arch-kit/dist/database";
 
 import { EntityProps } from "@/shared/domain";
+import { Tenant } from "@/system/domain/entities/tenant";
 
 export type IRepository<T extends EntityProps, W = Record<string, any>> = ISetUnitOfWork & IBaseRepository<T, W>;
 
 export interface IBaseRepositoryFactory {
-    createUnitOfWork(): UnitOfWork;
+    createUnitOfWork(tenant?: Tenant): UnitOfWork;
 }
