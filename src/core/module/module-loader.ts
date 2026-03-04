@@ -1,5 +1,8 @@
 import { Router } from "express";
 
+import { Subscriber } from "@/system/domain/entities/subscriber";
+import { Tenant } from "@/system/domain/entities/tenant";
+
 import { ERPModule } from "./erp-module.interface";
 import { ModuleRegistry } from "./module-registry";
 
@@ -11,19 +14,18 @@ export class ModuleLoader {
     constructor(
         private registry: ModuleRegistry,
         private cache: ModuleCache,
-        // private tenantRepository: TenantRepository,
     ) {}
 
-    async loadForTenant(tenantId: string) {
+    async loadForTenant(subscriber: Subscriber) {
         // 1. Verifica cache
+        const tenantId = subscriber.getTenant().getName();
         const cached = this.cache.get(tenantId);
         if (cached) {
             return cached;
         }
 
         // 2. Descobre módulos habilitados no plano
-        // const enabledModules = await this.tenantRepository.getEnabledModules(tenantId);
-        const enabledModules = ["users"];
+        const enabledModules = subscriber.get("enabledModules");
 
         const tenantModules = new Map<string, ERPModule>();
 
@@ -43,11 +45,11 @@ export class ModuleLoader {
         return tenantModules;
     }
 
-    getRouterFromCache(tenantId: string) {
-        return this.routerCache.get(tenantId);
+    getRouterFromCache(tenant: Tenant) {
+        return this.routerCache.get(tenant.getName());
     }
 
-    setRouterCache(tenantId: string, router: Router) {
-        this.routerCache.set(tenantId, router);
+    setRouterCache(tenant: Tenant, router: Router) {
+        this.routerCache.set(tenant.getName(), router);
     }
 }

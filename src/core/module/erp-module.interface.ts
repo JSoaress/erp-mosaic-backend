@@ -11,6 +11,6 @@ export class ERPModule {
         readonly migrations: string,
         readonly permissions: string[],
         // readonly events: IEventHandler<any>[],
-        readonly router: Router,
+        readonly http: { prefix: string; router: Router },
     ) {}
 }
