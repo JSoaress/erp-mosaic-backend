@@ -16,4 +16,11 @@ export class TenantKnexRepository implements ITenantRepository {
         if (!trx) throw new DbTransactionNotPreparedError("UnitOfWork não preparado em TenantKnexRepository.");
         await trx.raw(`CREATE SCHEMA ${tenant.getName()};`);
     }
+
+    async runMigrations(migrationsPath: string[]): Promise<void> {
+        const trx = this.uow?.getTransaction();
+        if (!trx) throw new DbTransactionNotPreparedError("Unit Of Work não preparado em TenantKnexRepository.");
+        const [, pending] = await trx.migrate.list({ directory: migrationsPath });
+        if (pending.length) await trx.migrate.latest({ directory: migrationsPath });
+    }
 }
