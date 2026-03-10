@@ -18,6 +18,18 @@ export class Subscriber extends Entity<SubscriberDTO> {
         return new Subscriber(props);
     }
 
+    getSchema() {
+        return SubscriberSchema;
+    }
+
+    update(input: unknown): Either<ValidationError, void> {
+        throw new Error("Method not implemented.");
+    }
+
+    addModule(module: string) {
+        this.props.enabledModules = Array.from(new Set([...this.props.enabledModules, module]));
+    }
+
     getTenant(): Tenant {
         return Tenant.restore(this.props.document, this.props.startedAt);
     }
