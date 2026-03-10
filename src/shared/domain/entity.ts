@@ -1,5 +1,7 @@
+import { Either } from "ts-arch-kit/dist/core/helpers";
 import { AbstractModel, AbstractModelProps, PrimaryKey } from "ts-arch-kit/dist/core/models";
 
+import { MosaicError } from "../errors";
 import { z } from "../infra/libs/zod";
 
 export type EntityProps = Required<AbstractModelProps>;
@@ -18,4 +20,12 @@ export abstract class Entity<T extends EntityProps> extends AbstractModel<T> {
     }
 
     abstract getSchema(): z.ZodObject;
+
+    abstract update(input: unknown): Either<MosaicError, void>;
+
+    protected updateProps(input: Partial<T>) {
+        Object.entries(input).forEach(([field, value]) => {
+            this.props[field as keyof T] = value;
+        });
+    }
 }
