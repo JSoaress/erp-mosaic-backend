@@ -1,6 +1,6 @@
 import { Either } from "ts-arch-kit/dist/core/helpers";
 
-import { Brand, CreateBrandDTO } from "@/modules/inventory/domain/entities/brand";
+import { Brand, CreateBrandDTO } from "@/modules/products/domain/entities/brand";
 import { CreateUseCaseInput } from "@/shared/application";
 import { ValidationError } from "@/shared/errors";
 

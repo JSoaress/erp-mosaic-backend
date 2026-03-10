@@ -1,6 +1,6 @@
 import { Either } from "ts-arch-kit/dist/core/helpers";
 
-import { Brand, UpdateBrandDTO } from "@/modules/inventory/domain/entities/brand";
+import { Brand, UpdateBrandDTO } from "@/modules/products/domain/entities/brand";
 import { UpdateUseCaseInput } from "@/shared/application";
 import { NotFoundModelError, ValidationError } from "@/shared/errors";
 

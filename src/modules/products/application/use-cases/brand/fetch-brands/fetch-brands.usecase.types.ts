@@ -1,7 +1,7 @@
 import { Either } from "ts-arch-kit/dist/core/helpers";
 import { QueryOptions } from "ts-arch-kit/dist/database";
 
-import { Brand } from "@/modules/inventory/domain/entities/brand";
+import { Brand } from "@/modules/products/domain/entities/brand";
 import { FetchUseCaseInput } from "@/shared/application";
 import { MosaicError } from "@/shared/errors";
 import { Pagination } from "@/shared/helpers";

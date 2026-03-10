@@ -1,4 +1,4 @@
-import { Brand } from "@/modules/inventory/domain/entities/brand";
+import { Brand } from "@/modules/products/domain/entities/brand";
 import { DeleteUseCase } from "@/shared/application";
 
 import { IRepositoryFactory } from "../../../repositories";
