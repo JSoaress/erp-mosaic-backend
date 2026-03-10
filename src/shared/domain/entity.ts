@@ -1,5 +1,7 @@
 import { AbstractModel, AbstractModelProps, PrimaryKey } from "ts-arch-kit/dist/core/models";
 
+import { z } from "../infra/libs/zod";
+
 export type EntityProps = Required<AbstractModelProps>;
 
 export abstract class Entity<T extends EntityProps> extends AbstractModel<T> {
@@ -14,4 +16,6 @@ export abstract class Entity<T extends EntityProps> extends AbstractModel<T> {
     toDto(): T {
         return { ...this.props };
     }
+
+    abstract getSchema(): z.ZodObject;
 }
