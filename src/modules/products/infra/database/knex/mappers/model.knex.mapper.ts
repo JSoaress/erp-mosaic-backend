@@ -1,4 +1,4 @@
-import { Model } from "@/modules/inventory/domain/entities/model";
+import { Model } from "@/modules/products/domain/entities/model";
 import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
 
 import { KnexModelDTO } from "../models";

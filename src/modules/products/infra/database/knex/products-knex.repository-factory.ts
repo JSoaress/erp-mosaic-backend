@@ -1,14 +1,14 @@
 import type { Knex } from "knex";
 import { UnitOfWork } from "ts-arch-kit/dist/database";
 
-import { IBrandRepository, IModelRepository, IRepositoryFactory } from "@/modules/inventory/application/repositories";
+import { IBrandRepository, IRepositoryFactory } from "@/modules/products/application/repositories";
 import { getKnex } from "@/shared/infra/database/knex/knexconfig";
 import { DefaultKnexRepository, KnexUnitOfWork } from "@/shared/infra/database/knex/repositories";
 import { Tenant } from "@/system/domain/entities/tenant";
 
 import * as mappers from "./mappers";
 
-export class InventoryKnexRepositoryFactory implements IRepositoryFactory {
+export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
     constructor(protected config: Knex.Config) {}
 
     createUnitOfWork(tenant?: Tenant): UnitOfWork {
@@ -17,10 +17,10 @@ export class InventoryKnexRepositoryFactory implements IRepositoryFactory {
     }
 
     createBrandRepository(): IBrandRepository {
-        return new DefaultKnexRepository("inventory_brands", new mappers.BrandKnexMapper());
+        return new DefaultKnexRepository("products_brands", new mappers.BrandKnexMapper());
     }
 
-    createModelRepository(): IModelRepository {
-        return new DefaultKnexRepository("inventory_models", new mappers.ModelKnexMapper());
-    }
+    // createModelRepository(): IModelRepository {
+    //     return new DefaultKnexRepository("products_models", new mappers.ModelKnexMapper());
+    // }
 }

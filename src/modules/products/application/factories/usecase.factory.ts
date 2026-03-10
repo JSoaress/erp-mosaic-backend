@@ -6,7 +6,7 @@ import { DeleteBrandUseCase } from "../use-cases/brand/delete-brand";
 import { FetchBrandsUseCase } from "../use-cases/brand/fetch-brands";
 import { UpdateBrandUseCase } from "../use-cases/brand/update-brand";
 
-export class InventoryUseCaseFactory {
+export class ProductsUseCaseFactory {
     constructor(
         private repositoryFactory: IRepositoryFactory,
         private fkValidationService: ForeignKeyValidationService,

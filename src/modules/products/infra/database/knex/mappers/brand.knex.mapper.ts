@@ -1,4 +1,4 @@
-import { Brand } from "@/modules/inventory/domain/entities/brand";
+import { Brand } from "@/modules/products/domain/entities/brand";
 import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
 
 import { KnexBrandDTO } from "../models";
