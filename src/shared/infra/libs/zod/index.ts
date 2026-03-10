@@ -28,4 +28,8 @@ export class ZodValidator {
     }
 }
 
+export function foreignKey(entity: string) {
+    return z.coerce.number().int().positive().describe(`fk:${entity}`);
+}
+
 export { z };
