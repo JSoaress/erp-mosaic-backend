@@ -17,6 +17,7 @@ type DeleteUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
 export type DeleteUseCaseInput = {
     id: PrimaryKey;
     tenant: Tenant;
+    [key: string]: any;
 };
 
 export type DeleteUseCaseOutput = Either<NotFoundModelError | MosaicError, void>;
@@ -30,15 +31,20 @@ export abstract class DeleteUseCase<
         super();
     }
 
-    protected async impl({ id, tenant }: TInput): Promise<TOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl(input: TInput): Promise<TOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(input.tenant);
         const repository = (this.gateway.repositoryFactory[this.gateway.repo] as any)() as IRepository<any>;
         unitOfWork.prepare(repository);
         return unitOfWork.execute<TOutput>(async () => {
-            const entity = await repository.findById(id);
-            if (!entity) return left(new NotFoundModelError(this.gateway.entityName, id)) as TOutput;
+            const filter = this.filterBy(input);
+            const entity = await repository.findOne({ filter });
+            if (!entity) return left(new NotFoundModelError(this.gateway.entityName, filter)) as TOutput;
             await repository.destroy(entity);
             return right(undefined) as TOutput;
         });
+    }
+
+    protected filterBy({ id }: TInput): Record<string, unknown> {
+        return { id };
     }
 }

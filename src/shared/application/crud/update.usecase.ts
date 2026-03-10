@@ -35,20 +35,26 @@ export abstract class UpdateUseCase<
         super();
     }
 
-    protected async impl({ id, tenant, ...input }: TInput): Promise<TOutput> {
+    protected async impl(input: TInput): Promise<TOutput> {
+        const { tenant, ...rest } = input;
         const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
         const repository = (this.gateway.repositoryFactory[this.gateway.repo] as any)() as IRepository<Entity<any>>;
         unitOfWork.prepare(repository);
         return unitOfWork.execute<TOutput>(async () => {
-            const entity = await repository.findById(id);
-            if (!entity) return left(new NotFoundModelError(this.gateway.entityName, id)) as TOutput;
-            const updateOrError = entity.update(input);
+            const filter = this.filterBy(input);
+            const entity = await repository.findOne({ filter });
+            if (!entity) return left(new NotFoundModelError(this.gateway.entityName, filter)) as TOutput;
+            const updateOrError = entity.update(rest);
             if (updateOrError.isLeft()) return left(updateOrError.value) as TOutput;
             const fkResult = await this.validateForeignKey(unitOfWork, entity);
             if (fkResult.isLeft()) return left(fkResult.value) as TOutput;
             const updatedEntity = await repository.save(entity);
             return right(updatedEntity) as TOutput;
         });
+    }
+
+    protected filterBy({ id }: TInput): Record<string, unknown> {
+        return { id };
     }
 
     protected async validateForeignKey(uow: UnitOfWork, entity: Entity<any>): Promise<Either<NotFoundModelError, void>> {
