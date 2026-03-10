@@ -77,7 +77,7 @@ export class DefaultKnexRepository<
             const [persistedObj] = await client(this.tableName).insert(objToPersist, "*");
             return this.mapper.toDomain(persistedObj);
         }
-        const [updatedObj] = await client(this.tableName).update(objToPersist, "*").where({ id: persistence.id });
+        const [updatedObj] = await client(this.tableName).update(objToPersist, "*").where({ id: data.id });
         return this.mapper.toDomain(updatedObj);
     }
 
