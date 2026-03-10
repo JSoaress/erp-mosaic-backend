@@ -12,5 +12,12 @@ export function createSystemRouter(useCaseFactory: SystemUseCaseFactory): Router
         return res.status(201).json(response.value);
     });
 
+    router.put("/active-modules", async (req, res, next) => {
+        const useCase = useCaseFactory.activeModulesUseCase();
+        const response = await useCase.execute(req.body);
+        if (response.isLeft()) return next(response.value);
+        return res.status(200).json(response.value);
+    });
+
     return router;
 }
