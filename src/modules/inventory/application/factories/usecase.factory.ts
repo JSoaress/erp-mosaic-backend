@@ -1,0 +1,30 @@
+import { ForeignKeyValidationService } from "@/shared/application/services";
+
+import { IRepositoryFactory } from "../repositories";
+import { CreateBrandUseCase } from "../use-cases/brand/create-brand";
+import { DeleteBrandUseCase } from "../use-cases/brand/delete-brand";
+import { FetchBrandsUseCase } from "../use-cases/brand/fetch-brands";
+import { UpdateBrandUseCase } from "../use-cases/brand/update-brand";
+
+export class InventoryUseCaseFactory {
+    constructor(
+        private repositoryFactory: IRepositoryFactory,
+        private fkValidationService: ForeignKeyValidationService,
+    ) {}
+
+    fetchBrandsUseCase(): FetchBrandsUseCase {
+        return new FetchBrandsUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    createBrandUseCase(): CreateBrandUseCase {
+        return new CreateBrandUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    updateBrandUseCase(): UpdateBrandUseCase {
+        return new UpdateBrandUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    deleteBrandUseCase(): DeleteBrandUseCase {
+        return new DeleteBrandUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+}
