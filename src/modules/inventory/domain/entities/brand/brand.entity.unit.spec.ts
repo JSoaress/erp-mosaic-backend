@@ -24,4 +24,27 @@ describe("brand entity", () => {
         const validationError = brandOrError.value as ValidationError;
         expect(validationError.getError("name")).toEqual(["Muito pequeno: esperado que string tivesse >=1 caracteres"]);
     });
+
+    test("should update a brand", () => {
+        const brand = Brand.restore({
+            id: 7,
+            name: "samsung",
+        });
+        const updateOrError = brand.update({ name: "Samsung" });
+        expect(updateOrError.isRight()).toBeTruthy();
+        expect(brand.get("id")).toBe(7);
+        expect(brand.get("name")).toBe("Samsung");
+    });
+
+    test("should not update a brand if properties are invalid", () => {
+        const brand = Brand.restore({
+            id: 7,
+            name: "samsung",
+        });
+        const updateOrError = brand.update({ name: "" });
+        expect(updateOrError.isLeft()).toBeTruthy();
+        const validationError = updateOrError.value as ValidationError;
+        expect(validationError.getError("name")).toEqual(["Muito pequeno: esperado que string tivesse >=1 caracteres"]);
+        expect(brand.get("name")).toBe("samsung");
+    });
 });
