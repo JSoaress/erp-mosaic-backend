@@ -5,6 +5,10 @@ import { CreateBrandUseCase } from "../use-cases/brand/create-brand";
 import { DeleteBrandUseCase } from "../use-cases/brand/delete-brand";
 import { FetchBrandsUseCase } from "../use-cases/brand/fetch-brands";
 import { UpdateBrandUseCase } from "../use-cases/brand/update-brand";
+import { CreateCategoryUseCase } from "../use-cases/category/create-category";
+import { DeleteCategoryUseCase } from "../use-cases/category/delete-category";
+import { FetchCategoriesUseCase } from "../use-cases/category/fetch-categories";
+import { UpdateCategoryUseCase } from "../use-cases/category/update-category";
 import { CreateModelUseCase } from "../use-cases/model/create-model";
 import { DeleteModelUseCase } from "../use-cases/model/delete-model";
 import { FetchModelsUseCase } from "../use-cases/model/fetch-models";
@@ -52,5 +56,21 @@ export class ProductsUseCaseFactory {
 
     deleteModelUseCase(): DeleteModelUseCase {
         return new DeleteModelUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    fetchCategoriesUseCase(): FetchCategoriesUseCase {
+        return new FetchCategoriesUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    createCategoryUseCase(): CreateCategoryUseCase {
+        return new CreateCategoryUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    updateCategoryUseCase(): UpdateCategoryUseCase {
+        return new UpdateCategoryUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    deleteCategoryUseCase(): DeleteCategoryUseCase {
+        return new DeleteCategoryUseCase({ repositoryFactory: this.repositoryFactory });
     }
 }
