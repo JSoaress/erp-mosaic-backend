@@ -8,6 +8,7 @@ import {
     IMeasurementUnitRepository,
     IModelRepository,
     IRepositoryFactory,
+    ISkuRepository,
 } from "@/modules/products/application/repositories";
 import { getKnex } from "@/shared/infra/database/knex/knexconfig";
 import { DefaultKnexRepository, KnexUnitOfWork } from "@/shared/infra/database/knex/repositories";
@@ -41,5 +42,9 @@ export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
 
     createMeasurementUnitRepository(): IMeasurementUnitRepository {
         return new DefaultKnexRepository("products_measurement_units", new mappers.MeasurementUnitKnexMapper());
+    }
+
+    createSkuRepository(): ISkuRepository {
+        return new DefaultKnexRepository("products_skus", new mappers.SkuKnexMapper());
     }
 }
