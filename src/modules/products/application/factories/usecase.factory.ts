@@ -9,6 +9,10 @@ import { CreateCategoryUseCase } from "../use-cases/category/create-category";
 import { DeleteCategoryUseCase } from "../use-cases/category/delete-category";
 import { FetchCategoriesUseCase } from "../use-cases/category/fetch-categories";
 import { UpdateCategoryUseCase } from "../use-cases/category/update-category";
+import { CreateItemUseCase } from "../use-cases/item/create-item";
+import { DeleteItemUseCase } from "../use-cases/item/delete-item";
+import { FetchItemsUseCase } from "../use-cases/item/fetch-items";
+import { UpdateItemUseCase } from "../use-cases/item/update-item";
 import { CreateMeasurementUnitUseCase } from "../use-cases/measurement-unit/create-measurement-unit";
 import { DeleteMeasurementUnitUseCase } from "../use-cases/measurement-unit/delete-measurement-unit";
 import { FetchMeasurementUnitsUseCase } from "../use-cases/measurement-unit/fetch-measurement-units";
@@ -76,6 +80,28 @@ export class ProductsUseCaseFactory {
 
     deleteCategoryUseCase(): DeleteCategoryUseCase {
         return new DeleteCategoryUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    fetchItemsUseCase(): FetchItemsUseCase {
+        return new FetchItemsUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    createItemUseCase(): CreateItemUseCase {
+        return new CreateItemUseCase({
+            repositoryFactory: this.repositoryFactory,
+            fkValidationService: this.fkValidationService,
+        });
+    }
+
+    updateItemUseCase(): UpdateItemUseCase {
+        return new UpdateItemUseCase({
+            repositoryFactory: this.repositoryFactory,
+            fkValidationService: this.fkValidationService,
+        });
+    }
+
+    deleteItemUseCase(): DeleteItemUseCase {
+        return new DeleteItemUseCase({ repositoryFactory: this.repositoryFactory });
     }
 
     fetchMeasurementUnitiesUseCase(): FetchMeasurementUnitsUseCase {
