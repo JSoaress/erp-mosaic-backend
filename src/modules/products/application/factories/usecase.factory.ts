@@ -9,6 +9,10 @@ import { CreateCategoryUseCase } from "../use-cases/category/create-category";
 import { DeleteCategoryUseCase } from "../use-cases/category/delete-category";
 import { FetchCategoriesUseCase } from "../use-cases/category/fetch-categories";
 import { UpdateCategoryUseCase } from "../use-cases/category/update-category";
+import { CreateMeasurementUnitUseCase } from "../use-cases/measurement-unit/create-measurement-unit";
+import { DeleteMeasurementUnitUseCase } from "../use-cases/measurement-unit/delete-measurement-unit";
+import { FetchMeasurementUnitsUseCase } from "../use-cases/measurement-unit/fetch-measurement-units";
+import { UpdateMeasurementUnitUseCase } from "../use-cases/measurement-unit/update-measument-unit";
 import { CreateModelUseCase } from "../use-cases/model/create-model";
 import { DeleteModelUseCase } from "../use-cases/model/delete-model";
 import { FetchModelsUseCase } from "../use-cases/model/fetch-models";
@@ -72,5 +76,21 @@ export class ProductsUseCaseFactory {
 
     deleteCategoryUseCase(): DeleteCategoryUseCase {
         return new DeleteCategoryUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    fetchMeasurementUnitiesUseCase(): FetchMeasurementUnitsUseCase {
+        return new FetchMeasurementUnitsUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    createMeasurementUnitUseCase(): CreateMeasurementUnitUseCase {
+        return new CreateMeasurementUnitUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    updateMeasurementUnitUseCase(): UpdateMeasurementUnitUseCase {
+        return new UpdateMeasurementUnitUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    deleteMeasurementUnitUseCase(): DeleteMeasurementUnitUseCase {
+        return new DeleteMeasurementUnitUseCase({ repositoryFactory: this.repositoryFactory });
     }
 }
