@@ -4,6 +4,8 @@ import { UnitOfWork } from "ts-arch-kit/dist/database";
 import {
     IBrandRepository,
     ICategoryRepository,
+    IItemRepository,
+    IMeasurementUnitRepository,
     IModelRepository,
     IRepositoryFactory,
 } from "@/modules/products/application/repositories";
@@ -31,5 +33,13 @@ export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
 
     createCategoryRepository(): ICategoryRepository {
         return new DefaultKnexRepository("products_categories", new mappers.CategoryKnexMapper());
+    }
+
+    createItemRepository(): IItemRepository {
+        return new DefaultKnexRepository("products_items", new mappers.ItemKnexMapper());
+    }
+
+    createMeasurementUnitRepository(): IMeasurementUnitRepository {
+        return new DefaultKnexRepository("products_measurement_units", new mappers.MeasurementUnitKnexMapper());
     }
 }
