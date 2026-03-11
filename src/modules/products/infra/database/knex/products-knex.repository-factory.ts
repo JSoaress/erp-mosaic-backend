@@ -1,7 +1,12 @@
 import type { Knex } from "knex";
 import { UnitOfWork } from "ts-arch-kit/dist/database";
 
-import { IBrandRepository, IModelRepository, IRepositoryFactory } from "@/modules/products/application/repositories";
+import {
+    IBrandRepository,
+    ICategoryRepository,
+    IModelRepository,
+    IRepositoryFactory,
+} from "@/modules/products/application/repositories";
 import { getKnex } from "@/shared/infra/database/knex/knexconfig";
 import { DefaultKnexRepository, KnexUnitOfWork } from "@/shared/infra/database/knex/repositories";
 import { Tenant } from "@/system/domain/entities/tenant";
@@ -22,5 +27,9 @@ export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
 
     createModelRepository(): IModelRepository {
         return new DefaultKnexRepository("products_models", new mappers.ModelKnexMapper());
+    }
+
+    createCategoryRepository(): ICategoryRepository {
+        return new DefaultKnexRepository("products_categories", new mappers.CategoryKnexMapper());
     }
 }
