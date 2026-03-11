@@ -39,4 +39,12 @@ export class Category extends Entity<CategoryDTO> {
     getSchema() {
         return CategorySchema;
     }
+
+    isTitle() {
+        return this.get("type") === "title";
+    }
+
+    isCategory() {
+        return this.get("type") === "category";
+    }
 }
