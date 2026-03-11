@@ -1595,6 +1595,11 @@ detect-indent@6.1.0:
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-6.1.0.tgz#592485ebbbf6b3b1ab2be175c8393d04ca0d57e6"
   integrity sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==
 
+dinero.js@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/dinero.js/-/dinero.js-2.0.1.tgz#e6224bc8567332d01496e8fd539f49fa8593ce2b"
+  integrity sha512-X25jquID8QHtkPzarmRudNF52MmJbyhk+DAt1vMM29EMaQMhykmmRxIq6k/OlmJKsIR0ZRbIca+u5Rq6BH8CFw==
+
 dir-glob@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-3.0.1.tgz#56dbf73d992a4a93ba1584f4534063fd2e41717f"
