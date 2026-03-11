@@ -21,6 +21,10 @@ import { CreateModelUseCase } from "../use-cases/model/create-model";
 import { DeleteModelUseCase } from "../use-cases/model/delete-model";
 import { FetchModelsUseCase } from "../use-cases/model/fetch-models";
 import { UpdateModelUseCase } from "../use-cases/model/update-model";
+import { CreateSkuUseCase } from "../use-cases/sku/create-sku";
+import { DeleteSkuUseCase } from "../use-cases/sku/delete-sku";
+import { FetchSkusUseCase } from "../use-cases/sku/fetch-skus";
+import { UpdateSkuUseCase } from "../use-cases/sku/update-sku";
 
 export class ProductsUseCaseFactory {
     constructor(
@@ -104,7 +108,7 @@ export class ProductsUseCaseFactory {
         return new DeleteItemUseCase({ repositoryFactory: this.repositoryFactory });
     }
 
-    fetchMeasurementUnitiesUseCase(): FetchMeasurementUnitsUseCase {
+    fetchMeasurementUnitsUseCase(): FetchMeasurementUnitsUseCase {
         return new FetchMeasurementUnitsUseCase({ repositoryFactory: this.repositoryFactory });
     }
 
@@ -118,5 +122,27 @@ export class ProductsUseCaseFactory {
 
     deleteMeasurementUnitUseCase(): DeleteMeasurementUnitUseCase {
         return new DeleteMeasurementUnitUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    fetchSkusUseCase(): FetchSkusUseCase {
+        return new FetchSkusUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    createSkuUseCase(): CreateSkuUseCase {
+        return new CreateSkuUseCase({
+            repositoryFactory: this.repositoryFactory,
+            fkServiceValidation: this.fkValidationService,
+        });
+    }
+
+    updateSkuUseCase(): UpdateSkuUseCase {
+        return new UpdateSkuUseCase({
+            repositoryFactory: this.repositoryFactory,
+            fkServiceValidation: this.fkValidationService,
+        });
+    }
+
+    deleteSkuUseCase(): DeleteSkuUseCase {
+        return new DeleteSkuUseCase({ repositoryFactory: this.repositoryFactory });
     }
 }
