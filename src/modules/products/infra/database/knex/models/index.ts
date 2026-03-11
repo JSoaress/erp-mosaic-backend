@@ -8,3 +8,9 @@ export type KnexModelDTO = KnexModel & {
     name: string;
     brand_id: number;
 };
+
+export type KnexCategoryDTO = KnexModel & {
+    name: string;
+    type: string;
+    parent_id: Nullable<number>;
+};
