@@ -26,3 +26,19 @@ export type KnexItemDTO = KnexModel & {
     brand_id: Nullable<number>;
     status: string;
 };
+
+export type KnexSkuDTO = KnexModel & {
+    item_id: number;
+    code: string;
+    description: string;
+    short_description: Nullable<string>;
+    characteristics: Nullable<string>;
+    gross_weight: number;
+    net_weight: number;
+    volumes: number;
+    model_id: Nullable<number>;
+    category_id: Nullable<number>;
+    measurement_unit_id: number;
+    obs: Nullable<string>;
+    active: boolean;
+};
