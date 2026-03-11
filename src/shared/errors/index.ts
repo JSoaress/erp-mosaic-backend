@@ -103,3 +103,15 @@ export class TenantIdNotProvidedError extends MosaicError {
         super("O 'tenantId' não foi fornecido.", true);
     }
 }
+
+export class SkuCodeTakenError extends MosaicError {
+    constructor(code: string) {
+        super(`O código de SKU "${code}" já está em uso.`, true);
+    }
+}
+
+export class InvalidSkuCategory extends MosaicError {
+    constructor(type: string) {
+        super(`O tipo de categoria "${type}" não pode ser atribuído ao SKU."`, true);
+    }
+}
