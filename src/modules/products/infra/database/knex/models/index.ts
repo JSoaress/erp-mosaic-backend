@@ -19,3 +19,10 @@ export type KnexMeasurementUnitDTO = KnexModel & {
     name: string;
     initials: string;
 };
+
+export type KnexItemDTO = KnexModel & {
+    name: string;
+    description: Nullable<string>;
+    brand_id: Nullable<number>;
+    status: string;
+};
