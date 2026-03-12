@@ -22,7 +22,7 @@ export class ForeignKeyValidationService {
             if (!description || !description.startsWith("fk:")) continue;
             const [, entity] = description.split(":") as string[];
             const value = data.toDto()[key];
-            if (!data.isNew || !data.checkDirtyProps(key) || value === undefined || value === null) continue;
+            if (value === undefined || value === null || (!data.isNew && !data.checkDirtyProps(key))) continue;
             const [first, ...rest] = entity.split("");
             const entityName = `${first.toUpperCase()}${rest.join("")}`;
             const repo = (repositoryFactory as any)[`create${entityName}Repository`]() as ISetUnitOfWork & IExists;
