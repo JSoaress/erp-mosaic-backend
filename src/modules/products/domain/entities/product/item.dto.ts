@@ -4,7 +4,7 @@ import { foreignKey, z } from "@/shared/infra/libs/zod";
 export const ItemSchema = z.object({
     name: z.string().min(1),
     description: z.string().min(1).nullish().default(null),
-    brandId: foreignKey("Brand").nullish().default(null),
+    brandId: foreignKey("Brand", true),
 });
 
 export const UpdateItemSchema = ItemSchema.partial();

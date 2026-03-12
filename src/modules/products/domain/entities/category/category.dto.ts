@@ -6,7 +6,7 @@ import { Category } from "./category.entity";
 export const CategorySchema = z.object({
     name: z.string().min(1),
     type: z.enum(["title", "category"]),
-    parentId: foreignKey("Category").nullish().default(null),
+    parentId: foreignKey("Category", true),
 });
 
 export const UpdateCategorySchema = CategorySchema.omit({ type: true }).partial();
