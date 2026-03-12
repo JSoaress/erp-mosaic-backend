@@ -8,6 +8,7 @@ import {
     IMeasurementUnitRepository,
     IModelRepository,
     IRepositoryFactory,
+    ISkuPriceRepository,
     ISkuRepository,
 } from "@/modules/products/application/repositories";
 import { getKnex } from "@/shared/infra/database/knex/knexconfig";
@@ -15,6 +16,7 @@ import { DefaultKnexRepository, KnexUnitOfWork } from "@/shared/infra/database/k
 import { Tenant } from "@/system/domain/entities/tenant";
 
 import * as mappers from "./mappers";
+import { SkuPriceKnexRepository } from "./repositories";
 
 export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
     constructor(protected config: Knex.Config) {}
@@ -46,5 +48,9 @@ export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
 
     createSkuRepository(): ISkuRepository {
         return new DefaultKnexRepository("products_skus", new mappers.SkuKnexMapper());
+    }
+
+    createSkuPriceRepository(): ISkuPriceRepository {
+        return new SkuPriceKnexRepository();
     }
 }
