@@ -28,6 +28,8 @@ export class ZodValidator {
     }
 }
 
+export const ForeignKeySchema = z.coerce.number().int().positive();
+
 export function foreignKey(entity: string): z.ZodNumber;
 export function foreignKey(entity: string, nullable: false): z.ZodNumber;
 export function foreignKey(
@@ -36,8 +38,7 @@ export function foreignKey(
 ): z.ZodDefault<z.ZodOptional<z.ZodNullable<z.ZodCoercedNumber<unknown>>>>;
 
 export function foreignKey(entity: string, nullable?: boolean) {
-    const schema = z.coerce.number().int().positive();
-    const described = schema.describe(`fk:${entity}`);
+    const described = ForeignKeySchema.describe(`fk:${entity}`);
     return nullable ? described.nullish().default(null).describe(`fk:${entity}`) : described;
 }
 
