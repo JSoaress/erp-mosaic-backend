@@ -5,9 +5,8 @@ const BaseSchema = z.object({
     skuId: foreignKey("Sku"),
     price: z.coerce
         .number()
-        .min(1)
         .int()
-        .positive()
+        .positive({ error: "O valor deve ser maior que 0." })
         .transform((v) => Money.fromCents(v)),
     validFrom: z.coerce
         .date()
