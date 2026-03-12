@@ -4,3 +4,4 @@ export * from "./model.knex.mapper";
 export * from "./item.knex.mapper";
 export * from "./measurement-unit.knex.mapper";
 export * from "./sku.knex.mapper";
+export * from "./sku-price.knex.mapper";

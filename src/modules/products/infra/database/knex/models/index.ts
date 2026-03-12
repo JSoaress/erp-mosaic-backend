@@ -42,3 +42,12 @@ export type KnexSkuDTO = KnexModel & {
     obs: Nullable<string>;
     active: boolean;
 };
+
+export type KnexSkuPriceDTO = KnexModel & {
+    sku_id: number;
+    price: number;
+    validFrom: Date;
+    validTo: Nullable<Date>;
+    main: boolean;
+    active: boolean;
+};
