@@ -5,6 +5,7 @@ import { ICategoryRepository } from "./category.repository";
 import { IItemRepository } from "./item.repository";
 import { IMeasurementUnitRepository } from "./measurement-unit.repository";
 import { IModelRepository } from "./model.repository";
+import { ISkuPriceRepository } from "./sku-price.repository";
 import { ISkuRepository } from "./sku.repository";
 
 export interface IRepositoryFactory extends IBaseRepositoryFactory {
@@ -14,4 +15,5 @@ export interface IRepositoryFactory extends IBaseRepositoryFactory {
     createItemRepository(): IItemRepository;
     createMeasurementUnitRepository(): IMeasurementUnitRepository;
     createSkuRepository(): ISkuRepository;
+    createSkuPriceRepository(): ISkuPriceRepository;
 }
