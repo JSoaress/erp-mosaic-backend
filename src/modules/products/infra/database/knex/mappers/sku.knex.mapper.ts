@@ -19,7 +19,6 @@ export class SkuKnexMapper extends AbstractMapper<Sku, KnexSkuDTO> {
             volumes: { columnName: "volumes" },
             modelId: { columnName: "model_id" },
             categoryId: { columnName: "category_id" },
-            measurementUnitId: { columnName: "measurement_unit_id" },
             obs: { columnName: "obs" },
             active: { columnName: "active" },
         },

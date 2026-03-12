@@ -33,7 +33,6 @@ export type KnexSkuDTO = KnexModel & {
     volumes: number;
     model_id: Nullable<number>;
     category_id: Nullable<number>;
-    measurement_unit_id: number;
     obs: Nullable<string>;
     active: boolean;
 };

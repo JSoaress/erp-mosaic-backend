@@ -12,7 +12,6 @@ export const SkuSchema = z.object({
     volumes: z.coerce.number().int().default(0),
     modelId: foreignKey("Model", true),
     categoryId: foreignKey("Category", true),
-    measurementUnitId: foreignKey("MeasurementUnit"),
     obs: z.string().min(1).nullish().default(null),
     active: z.coerce.boolean().default(true),
 });

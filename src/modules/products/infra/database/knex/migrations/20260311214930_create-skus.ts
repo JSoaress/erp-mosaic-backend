@@ -15,7 +15,6 @@ export async function up(knex: Knex): Promise<void> {
         table.integer("volumes").notNullable().defaultTo(0);
         table.integer("model_id").references("products_models.id");
         table.integer("category_id").references("products_categories.id");
-        table.integer("measurement_unit_id").notNullable().references("products_measurement_units.id");
         table.string("obs");
         table.boolean("active").notNullable().defaultTo(true);
     });
