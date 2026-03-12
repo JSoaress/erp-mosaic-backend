@@ -21,6 +21,12 @@ import { CreateModelUseCase } from "../use-cases/model/create-model";
 import { DeleteModelUseCase } from "../use-cases/model/delete-model";
 import { FetchModelsUseCase } from "../use-cases/model/fetch-models";
 import { UpdateModelUseCase } from "../use-cases/model/update-model";
+import {
+    CreateSkuPriceUseCase,
+    DeleteSkuPriceUseCase,
+    FetchSkuPricesUseCase,
+    UpdateSkuPriceUseCase,
+} from "../use-cases/sku-price";
 import { CreateSkuUseCase } from "../use-cases/sku/create-sku";
 import { DeleteSkuUseCase } from "../use-cases/sku/delete-sku";
 import { FetchSkusUseCase } from "../use-cases/sku/fetch-skus";
@@ -144,5 +150,27 @@ export class ProductsUseCaseFactory {
 
     deleteSkuUseCase(): DeleteSkuUseCase {
         return new DeleteSkuUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    fetchSkuPricesUseCase() {
+        return FetchSkuPricesUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    createSkuPriceUseCase() {
+        return CreateSkuPriceUseCase({
+            repositoryFactory: this.repositoryFactory,
+            fkValidationService: this.fkValidationService,
+        });
+    }
+
+    updateSkuPriceUseCase() {
+        return UpdateSkuPriceUseCase({
+            repositoryFactory: this.repositoryFactory,
+            fkValidationService: this.fkValidationService,
+        });
+    }
+
+    deleteSkuPriceUseCase() {
+        return DeleteSkuPriceUseCase({ repositoryFactory: this.repositoryFactory });
     }
 }
