@@ -15,11 +15,6 @@ export type KnexCategoryDTO = KnexModel & {
     parent_id: Nullable<number>;
 };
 
-export type KnexMeasurementUnitDTO = KnexModel & {
-    name: string;
-    initials: string;
-};
-
 export type KnexItemDTO = KnexModel & {
     name: string;
     description: Nullable<string>;

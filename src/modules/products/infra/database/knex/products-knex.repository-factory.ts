@@ -5,7 +5,6 @@ import {
     IBrandRepository,
     ICategoryRepository,
     IItemRepository,
-    IMeasurementUnitRepository,
     IModelRepository,
     IRepositoryFactory,
     ISkuPriceRepository,
@@ -40,10 +39,6 @@ export class ProductsKnexRepositoryFactory implements IRepositoryFactory {
 
     createItemRepository(): IItemRepository {
         return new DefaultKnexRepository("products_items", new mappers.ItemKnexMapper());
-    }
-
-    createMeasurementUnitRepository(): IMeasurementUnitRepository {
-        return new DefaultKnexRepository("products_measurement_units", new mappers.MeasurementUnitKnexMapper());
     }
 
     createSkuRepository(): ISkuRepository {
