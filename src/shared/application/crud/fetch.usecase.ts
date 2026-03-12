@@ -21,7 +21,7 @@ export type FetchUseCaseInput = {
 
 export type FetchUseCaseOutput = Either<MosaicError, Pagination<any>>;
 
-export abstract class FetchUseCase<
+export class FetchUseCase<
     TInput extends FetchUseCaseInput,
     TOutput extends FetchUseCaseOutput,
     TRepositoryFactory extends IBaseRepositoryFactory,

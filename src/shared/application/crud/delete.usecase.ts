@@ -22,7 +22,7 @@ export type DeleteUseCaseInput = {
 
 export type DeleteUseCaseOutput = Either<NotFoundModelError | MosaicError, void>;
 
-export abstract class DeleteUseCase<
+export class DeleteUseCase<
     TInput extends DeleteUseCaseInput,
     TOutput extends DeleteUseCaseOutput,
     TRepositoryFactory extends IBaseRepositoryFactory,
