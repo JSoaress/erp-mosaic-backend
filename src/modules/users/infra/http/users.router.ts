@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { UsersUseCaseFactory } from "../../application/factories";
 
-export function createUsersRouter(useCaseFactory: UsersUseCaseFactory): Router {
+export function usersRouter(useCaseFactory: UsersUseCaseFactory): Router {
     const router = Router();
 
     router.post("/superuser", async (req, res, next) => {
