@@ -5,6 +5,7 @@ import { Entity, Money } from "@/shared/domain";
 import {
     AddOrderItemConflictError,
     AddOrderItemError,
+    CancelOrderError,
     CancelOrderItemError,
     OpenOrderError,
     ValidationError,
@@ -70,9 +71,9 @@ export class Order extends Entity<OrderDTO> {
         return right(undefined);
     }
 
-    cancel(attendant: Attendant): Either<AddOrderItemError, void> {
-        if (this.getStatus() !== "open")
-            return left(new AddOrderItemConflictError(this.getId(), "O pedido não está mais aberto."));
+    cancel(attendant: Attendant): Either<CancelOrderError, void> {
+        // TODO: emitir evento de pedido cancelado
+        if (this.getStatus() !== "open") return left(new CancelOrderError(this.getId(), "O pedido não está mais aberto."));
         this.addStatus(attendant.getId(), "cancelled");
         return right(undefined);
     }
