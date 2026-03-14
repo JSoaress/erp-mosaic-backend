@@ -115,3 +115,54 @@ export class InvalidSkuCategory extends MosaicError {
         super(`O tipo de categoria "${type}" não pode ser atribuído ao SKU."`, true);
     }
 }
+
+export class OpenOrderError extends MosaicError {
+    constructor(reason: string) {
+        super(`Não foi possível abrir o pedido. MOTIVO: ${reason}`, true);
+    }
+}
+
+export class TableIsNotCloseError extends MosaicError {
+    constructor() {
+        super("A mesa não está fechada.", true);
+    }
+}
+
+export class AddOrderItemError extends MosaicError {
+    constructor(orderId: number) {
+        super(`Não foi possível adicionar o produto no pedido nº ${orderId}.`, true);
+    }
+}
+
+export class AddOrderItemValidationError extends AddOrderItemError {
+    constructor(
+        orderId: number,
+        private validationError: ValidationError,
+    ) {
+        super(orderId);
+    }
+
+    toJSON(): Record<string, unknown> {
+        return {
+            ...super.toJSON(),
+            reason: this.validationError.message,
+            errors: this.validationError.getErrors(),
+        };
+    }
+}
+
+export class AddOrderItemConflictError extends AddOrderItemError {
+    constructor(
+        orderId: number,
+        private reason: string,
+    ) {
+        super(orderId);
+    }
+
+    toJSON(): Record<string, unknown> {
+        return {
+            ...super.toJSON(),
+            reason: this.reason,
+        };
+    }
+}
