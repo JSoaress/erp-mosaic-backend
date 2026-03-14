@@ -3,6 +3,7 @@ import { ForeignKeyValidationService } from "@/shared/application/services";
 
 import { IRepositoryFactory } from "../repositories";
 import { AddOrderItemUseCase } from "../use-cases/order/add-order-item";
+import { CancelOrderItemUseCase } from "../use-cases/order/cancel-order-item";
 import { FetchOrdersUseCase } from "../use-cases/order/fetch-orders";
 import { OpenOrderUseCase } from "../use-cases/order/open-order";
 import { CreateTableUseCase, DeleteTableUseCase, FetchTablesUseCase, UpdateTableUseCase } from "../use-cases/table";
@@ -43,5 +44,9 @@ export class RestaurantUseCaseFactory {
             repositoryFactory: this.repositoryFactory,
             productsContract: this.productsContract,
         });
+    }
+
+    cancelOrderItemUseCase(): CancelOrderItemUseCase {
+        return new CancelOrderItemUseCase({ repositoryFactory: this.repositoryFactory });
     }
 }
