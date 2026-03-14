@@ -2,7 +2,13 @@ import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 import { ZodObject } from "zod";
 
 import { Entity, Money } from "@/shared/domain";
-import { AddOrderItemConflictError, AddOrderItemError, OpenOrderError, ValidationError } from "@/shared/errors";
+import {
+    AddOrderItemConflictError,
+    AddOrderItemError,
+    CancelOrderItemError,
+    OpenOrderError,
+    ValidationError,
+} from "@/shared/errors";
 
 import { Attendant } from "../attendant";
 import { OrderItem } from "./order-item.entity";
@@ -44,6 +50,17 @@ export class Order extends Entity<OrderDTO> {
         if (orderItemOrError.isLeft()) return left(orderItemOrError.value);
         this.items.push(orderItemOrError.value);
         return right(orderItemOrError.value);
+    }
+
+    cancelItem(item: number): Either<CancelOrderItemError, void> {
+        const index = this.items.findIndex((i) => i.get("item") === item);
+        if (index === -1) return left(new CancelOrderItemError(this.getId(), `O item ${item} não existe.`));
+        const orderItem = this.items[index];
+        if (orderItem.get("status") === "cancelled")
+            return left(new CancelOrderItemError(this.getId(), "O item já está cancelado."));
+        orderItem.cancel();
+        this.items[index] = orderItem;
+        return right(undefined);
     }
 
     close(attendant: Attendant): Either<AddOrderItemError, void> {
