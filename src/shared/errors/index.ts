@@ -122,6 +122,18 @@ export class OpenOrderError extends MosaicError {
     }
 }
 
+export class CancelOrderError extends MosaicError {
+    constructor(orderId: number, reason: string) {
+        super(`Não foi possível cancelar o pedido nº${orderId}. MOTIVO: ${reason}`, true);
+    }
+}
+
+export class CloseOrderError extends MosaicError {
+    constructor(orderId: number, reason: string) {
+        super(`Não foi possível fechar o pedido nº${orderId}. MOTIVO: ${reason}`, true);
+    }
+}
+
 export class TableIsNotCloseError extends MosaicError {
     constructor() {
         super("A mesa não está fechada.", true);
