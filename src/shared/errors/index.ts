@@ -166,3 +166,11 @@ export class AddOrderItemConflictError extends AddOrderItemError {
         };
     }
 }
+
+export class CancelOrderItemError extends MosaicError {
+    constructor(orderId: number, reason?: string) {
+        const chunks = [`Não foi possível cancelar o item no pedido nº ${orderId}.`];
+        if (reason) chunks.push("MOTIVO:", reason);
+        super(chunks.join(" "), true);
+    }
+}
