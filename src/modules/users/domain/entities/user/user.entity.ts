@@ -6,6 +6,7 @@ import {
     InvalidPasswordError,
     InvalidTokenError,
     InvalidUserError,
+    MosaicError,
     ValidationError,
 } from "@/shared/errors";
 import { ZodValidator } from "@/shared/infra/libs/zod";
@@ -34,6 +35,14 @@ export class User extends Entity<UserDTO> {
 
     static restore(props: RestoreUserDTO) {
         return new User(props);
+    }
+
+    getSchema() {
+        return UserSchema;
+    }
+
+    update(): Either<MosaicError, void> {
+        throw new Error("Method not implemented.");
     }
 
     isActive() {
