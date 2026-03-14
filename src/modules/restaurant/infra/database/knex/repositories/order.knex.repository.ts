@@ -95,12 +95,14 @@ export class OrderKnexRepository extends DefaultKnexRepository<Order, KnexFullOr
         const toUpdate = items.filter((i) => !i._isNew);
         const result: KnexOrderItemDTO[] = [];
 
-        const objToPersists = toSave.map((item) => ({
-            ...this.removeFieldsFromObject(item, ["id", "_isNew"]),
-            order_id: orderId,
-        }));
-        const persistedObjs = await trx(TABLE_ORDER_ITEMS).insert(objToPersists, "*");
-        result.push(...persistedObjs);
+        if (toSave.length) {
+            const objToPersists = toSave.map((item) => ({
+                ...this.removeFieldsFromObject(item, ["id", "_isNew"]),
+                order_id: orderId,
+            }));
+            const persistedObjs = await trx(TABLE_ORDER_ITEMS).insert(objToPersists, "*");
+            result.push(...persistedObjs);
+        }
 
         // eslint-disable-next-line no-restricted-syntax
         for (const item of toUpdate) {
