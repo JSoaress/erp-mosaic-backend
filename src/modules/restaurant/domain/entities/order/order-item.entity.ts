@@ -1,0 +1,47 @@
+import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
+
+import { Entity } from "@/shared/domain";
+import { AddOrderItemConflictError, AddOrderItemError, ValidationError } from "@/shared/errors";
+import { ZodValidator } from "@/shared/infra/libs/zod";
+
+import { OrderItemDTO, CreateOrderItemDTO, OrderItemSchema } from "./order-item.dto";
+
+export class OrderItem extends Entity<OrderItemDTO> {
+    static create(input: CreateOrderItemDTO): Either<ValidationError | AddOrderItemError, OrderItem> {
+        if (!input.skuPrice.get("active"))
+            return left(new AddOrderItemConflictError(input.orderId as number, "O preço do produto não é válido."));
+        const validDataOrError = ZodValidator.validate({ ...input, skuId: input.skuPrice.get("skuId") }, OrderItemSchema);
+        if (!validDataOrError.success) return left(new ValidationError(OrderItem.name, validDataOrError.errors));
+        const { data } = validDataOrError;
+        return right(
+            new OrderItem({
+                id: 0,
+                ...data,
+                unitPrice: input.skuPrice.get("price"),
+                createdAt: new Date(),
+                createdBy: input.attendant.getId(),
+                status: "delivered",
+            }),
+        );
+    }
+
+    static restore(input: OrderItemDTO) {
+        return new OrderItem(input);
+    }
+
+    update(): Either<ValidationError, void> {
+        return right(undefined);
+    }
+
+    getSchema() {
+        return OrderItemSchema;
+    }
+
+    getTotalItem() {
+        return this.get("unitPrice").multiply(this.get("quantity").toNumber());
+    }
+
+    cancel() {
+        this.props.status = "cancelled";
+    }
+}
