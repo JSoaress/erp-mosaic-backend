@@ -12,13 +12,21 @@ export function ordersRouter(useCaseFactory: RestaurantUseCaseFactory): Router {
 
     router.get("/", httpGet(useCaseFactory.fetchOrdersUseCase(), { presenter }));
     router.post("/open", httpPost(useCaseFactory.openOrderUseCase()));
-    router.post("/:order/add-item", async (req, res, next) => {
+    router.post("/:id/add-item", async (req, res, next) => {
         const { tenant, authenticatedUser } = req;
-        const { order: orderId } = req.params;
+        const { id: orderId } = req.params;
         const useCase = useCaseFactory.addOrderItemUseCase();
         const response = await useCase.execute({ ...req.body, orderId, authenticatedUser, tenant });
         if (response.isLeft()) return next(response.value);
         return res.status(201).json(presenter.present(response.value));
+    });
+    router.put("/:id/cancel-item", async (req, res, next) => {
+        const { tenant, authenticatedUser } = req;
+        const { id: orderId } = req.params;
+        const useCase = useCaseFactory.cancelOrderItemUseCase();
+        const response = await useCase.execute({ ...req.body, orderId, authenticatedUser, tenant });
+        if (response.isLeft()) return next(response.value);
+        return res.status(200).json(presenter.present(response.value));
     });
 
     return router;
