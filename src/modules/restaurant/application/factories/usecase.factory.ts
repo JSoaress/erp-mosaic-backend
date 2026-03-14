@@ -1,6 +1,7 @@
 import { ForeignKeyValidationService } from "@/shared/application/services";
 
 import { IRepositoryFactory } from "../repositories";
+import { FetchOrdersUseCase } from "../use-cases/order/fetch-orders";
 import { OpenOrderUseCase } from "../use-cases/order/open-order";
 import { CreateTableUseCase, DeleteTableUseCase, FetchTablesUseCase, UpdateTableUseCase } from "../use-cases/table";
 
@@ -24,6 +25,10 @@ export class RestaurantUseCaseFactory {
 
     deleteTableUseCase() {
         return DeleteTableUseCase({ repositoryFactory: this.repositoryFactory });
+    }
+
+    fetchOrdersUseCase(): FetchOrdersUseCase {
+        return new FetchOrdersUseCase({ repositoryFactory: this.repositoryFactory });
     }
 
     openOrderUseCase(): OpenOrderUseCase {
