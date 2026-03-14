@@ -17,7 +17,7 @@ export function buildRestaurantModule() {
         { name: "restaurant" },
         path.resolve(__dirname, "infra", "database", "knex", "migrations"),
         [],
-        { prefix: "restaurant", router },
+        { prefix: "restaurant", privateRouter: router },
     );
     return module;
 }
