@@ -23,10 +23,15 @@ export function errorHandler(err: Error | BasicError, req: Request, res: Respons
         case appErrors.InvalidUserError:
         case appErrors.SkuCodeTakenError:
         case appErrors.InvalidSkuCategory:
+        case appErrors.TableIsNotCloseError:
+        case appErrors.OpenOrderError:
+        case appErrors.AddOrderItemConflictError:
+        case appErrors.CancelOrderItemError:
             return res.status(HttpStatusCodes.CONFLICT).json(err);
         // 422
         case appErrors.ValidationError:
         case appErrors.InvalidPasswordError:
+        case appErrors.AddOrderItemValidationError:
             return res.status(HttpStatusCodes.UNPROCESSABLE_ENTITY).json(err);
         // 500
         default:
