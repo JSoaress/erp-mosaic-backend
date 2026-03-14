@@ -7,11 +7,11 @@ import { StockUseCaseFactory } from "../../application/factories";
 export function measurementUnitsRouter(useCaseFactory: StockUseCaseFactory): Router {
     const router = Router();
 
-    const defaultJsonPresenter = new EntityJsonPresenter();
+    const presenter = new EntityJsonPresenter();
 
-    router.get("/", httpGet(useCaseFactory.fetchMeasurementUnitsUseCase(), defaultJsonPresenter));
-    router.post("/", httpPost(useCaseFactory.createMeasurementUnitUseCase(), defaultJsonPresenter));
-    router.patch("/:id", httpPatch(useCaseFactory.updateMeasurementUnitUseCase(), defaultJsonPresenter));
+    router.get("/", httpGet(useCaseFactory.fetchMeasurementUnitsUseCase(), { presenter }));
+    router.post("/", httpPost(useCaseFactory.createMeasurementUnitUseCase(), { presenter }));
+    router.patch("/:id", httpPatch(useCaseFactory.updateMeasurementUnitUseCase(), { presenter }));
     router.delete("/:id", httpDelete(useCaseFactory.deleteMeasurementUnitUseCase()));
 
     return router;
