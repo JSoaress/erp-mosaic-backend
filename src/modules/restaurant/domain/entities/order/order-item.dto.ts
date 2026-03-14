@@ -1,4 +1,4 @@
-import { SkuPrice } from "@/modules/products/domain/entities/sku-price";
+import { SharedSkuPriceDTO } from "@/core/contracts";
 import { EntityProps, Money, Quantity } from "@/shared/domain";
 import { foreignKey, ForeignKeySchema, z } from "@/shared/infra/libs/zod";
 
@@ -26,6 +26,6 @@ export type OrderItemDTO = EntityProps &
     };
 
 export type CreateOrderItemDTO = Omit<z.input<Schema>, "skuId"> & {
-    skuPrice: SkuPrice;
+    skuPrice: SharedSkuPriceDTO;
     attendant: Attendant;
 };
