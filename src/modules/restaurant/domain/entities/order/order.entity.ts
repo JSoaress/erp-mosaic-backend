@@ -7,6 +7,7 @@ import {
     AddOrderItemError,
     CancelOrderError,
     CancelOrderItemError,
+    CloseOrderError,
     OpenOrderError,
     ValidationError,
 } from "@/shared/errors";
@@ -64,15 +65,13 @@ export class Order extends Entity<OrderDTO> {
         return right(undefined);
     }
 
-    close(attendant: Attendant): Either<AddOrderItemError, void> {
-        if (this.getStatus() !== "open")
-            return left(new AddOrderItemConflictError(this.getId(), "O pedido não está mais aberto."));
+    close(attendant: Attendant): Either<CloseOrderError, void> {
+        if (this.getStatus() !== "open") return left(new CloseOrderError(this.getId(), "O pedido não está mais aberto."));
         this.addStatus(attendant.getId(), "closed");
         return right(undefined);
     }
 
     cancel(attendant: Attendant): Either<CancelOrderError, void> {
-        // TODO: emitir evento de pedido cancelado
         if (this.getStatus() !== "open") return left(new CancelOrderError(this.getId(), "O pedido não está mais aberto."));
         this.addStatus(attendant.getId(), "cancelled");
         return right(undefined);
