@@ -1,5 +1,5 @@
 import { EntityProps, Quantity } from "@/shared/domain";
-import { foreignKey, z } from "@/shared/infra/libs/zod";
+import { foreignKey, z } from "@/shared/libs/zod";
 
 export const StockBalanceSchema = z.object({
     stockItemId: foreignKey("StockItem"),

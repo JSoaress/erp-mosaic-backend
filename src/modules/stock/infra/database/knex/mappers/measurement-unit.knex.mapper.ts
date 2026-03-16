@@ -1,5 +1,5 @@
 import { MeasurementUnit } from "@/modules/stock/domain/entities/measurement-unit";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexMeasurementUnitDTO } from "../models";
 

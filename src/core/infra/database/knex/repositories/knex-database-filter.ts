@@ -3,7 +3,7 @@ import isObject from "isobject";
 import type { Knex } from "knex";
 import { DatabaseFilter, DatabaseFilterOperatorParams, FilterOperators, Where } from "ts-arch-kit/dist/database";
 
-import { TableFilterConfig } from "../../abstract-mapper";
+import { TableFilterConfig } from "../../../../database/abstract-mapper";
 
 export class KnexDatabaseFilter extends DatabaseFilter<void> {
     constructor(readonly conn: Knex.QueryBuilder) {

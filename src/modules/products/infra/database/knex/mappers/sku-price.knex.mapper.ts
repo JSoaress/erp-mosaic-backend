@@ -1,6 +1,6 @@
 import { SkuPrice } from "@/modules/products/domain/entities/sku-price";
 import { Money } from "@/shared/domain";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexSkuPriceDTO } from "../models";
 

@@ -2,9 +2,9 @@
 import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 import { UnitOfWork } from "ts-arch-kit/dist/database";
 
+import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { Entity } from "@/shared/domain";
 import { MosaicError, NotFoundModelError, ValidationError } from "@/shared/errors";
-import { IBaseRepositoryFactory, IRepository } from "@/shared/infra/database";
 import { Tenant } from "@/system/domain/entities/tenant";
 
 import { ForeignKeyValidationService } from "../services";

@@ -1,5 +1,5 @@
 import { Item } from "@/modules/products/domain/entities/product";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexItemDTO } from "../models";
 

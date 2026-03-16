@@ -1,5 +1,5 @@
 import { EntityProps, Money } from "@/shared/domain";
-import { foreignKey, z } from "@/shared/infra/libs/zod";
+import { foreignKey, z } from "@/shared/libs/zod";
 
 const BaseSchema = z.object({
     skuId: foreignKey("Sku"),

@@ -1,4 +1,4 @@
-import { IBaseRepositoryFactory } from "@/shared/infra/database";
+import { IBaseRepositoryFactory } from "@/shared/database";
 
 import { IOrderRepository } from "./order.repository";
 import { ITableRepository } from "./table.repository";

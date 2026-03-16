@@ -1,4 +1,4 @@
-import { IBaseRepositoryFactory } from "@/shared/infra/database";
+import { IBaseRepositoryFactory } from "@/shared/database";
 
 import { IUserRepository } from "./user.repository";
 

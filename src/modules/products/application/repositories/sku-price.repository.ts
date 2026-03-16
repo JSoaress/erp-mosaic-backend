@@ -1,4 +1,4 @@
-import { IRepository } from "@/shared/infra/database";
+import { IRepository } from "@/shared/database";
 
 import { Sku } from "../../domain/entities/product";
 import { SkuPrice, SkuPriceDTO } from "../../domain/entities/sku-price";

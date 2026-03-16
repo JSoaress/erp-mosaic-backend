@@ -2,7 +2,7 @@ import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 
 import { Entity } from "@/shared/domain";
 import { ValidationError } from "@/shared/errors";
-import { ZodValidator } from "@/shared/infra/libs/zod";
+import { ZodValidator } from "@/shared/libs/zod";
 
 import { SkuDTO, CreateSkuDTO, SkuSchema, UpdateSkuDTO, UpdateSkuSchema } from "./sku.dto";
 

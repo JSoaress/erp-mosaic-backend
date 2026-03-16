@@ -2,7 +2,7 @@ import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 
 import { Entity, Validity } from "@/shared/domain";
 import { AddOrderItemConflictError, AddOrderItemError, ValidationError } from "@/shared/errors";
-import { ZodValidator } from "@/shared/infra/libs/zod";
+import { ZodValidator } from "@/shared/libs/zod";
 
 import { OrderItemDTO, CreateOrderItemDTO, OrderItemSchema } from "./order-item.dto";
 

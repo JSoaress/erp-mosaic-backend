@@ -2,9 +2,9 @@
 import { Either, right } from "ts-arch-kit/dist/core/helpers";
 import { QueryOptions } from "ts-arch-kit/dist/database";
 
+import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { MosaicError } from "@/shared/errors";
 import { Pagination } from "@/shared/helpers";
-import { IBaseRepositoryFactory, IRepository } from "@/shared/infra/database";
 import { Tenant } from "@/system/domain/entities/tenant";
 
 import { UseCase } from "../usecase";

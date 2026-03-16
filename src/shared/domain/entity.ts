@@ -2,7 +2,7 @@ import { Either } from "ts-arch-kit/dist/core/helpers";
 import { AbstractModel, AbstractModelProps, PrimaryKey } from "ts-arch-kit/dist/core/models";
 
 import { MosaicError } from "../errors";
-import { z } from "../infra/libs/zod";
+import { z } from "../libs/zod";
 
 export type EntityProps = Required<AbstractModelProps>;
 

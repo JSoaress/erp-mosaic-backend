@@ -1,5 +1,5 @@
 import { EntityProps } from "@/shared/domain";
-import { foreignKey, z } from "@/shared/infra/libs/zod";
+import { foreignKey, z } from "@/shared/libs/zod";
 
 export const ModelSchema = z.object({
     name: z.string().min(1),

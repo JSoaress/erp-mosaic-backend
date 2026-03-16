@@ -1,7 +1,7 @@
 import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 
 import { ValidationError } from "@/shared/errors";
-import { z, ZodValidator } from "@/shared/infra/libs/zod";
+import { z, ZodValidator } from "@/shared/libs/zod";
 
 function toPostgresSchemaName(input: string): string {
     return input

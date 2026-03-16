@@ -1,4 +1,4 @@
-import { IRepository } from "@/shared/infra/database";
+import { IRepository } from "@/shared/database";
 
 import { Table, TableDTO } from "../../domain/entities/table";
 

@@ -1,5 +1,5 @@
 import { Brand } from "@/modules/products/domain/entities/brand";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexBrandDTO } from "../models";
 

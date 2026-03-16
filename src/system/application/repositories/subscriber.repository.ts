@@ -1,4 +1,4 @@
-import { IRepository } from "@/shared/infra/database";
+import { IRepository } from "@/shared/database";
 import { Subscriber, SubscriberDTO } from "@/system/domain/entities/subscriber";
 
 export type SubscriberWhereRepository = SubscriberDTO;

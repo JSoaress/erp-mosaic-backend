@@ -1,5 +1,5 @@
 import { EntityProps } from "@/shared/domain";
-import { z } from "@/shared/infra/libs/zod";
+import { z } from "@/shared/libs/zod";
 
 export const SubscriberSchema = z.object({
     name: z.preprocess((e: string) => e.trim(), z.string().min(1).max(50)),

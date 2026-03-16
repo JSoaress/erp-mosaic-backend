@@ -1,4 +1,4 @@
-import { IRepository } from "@/shared/infra/database";
+import { IRepository } from "@/shared/database";
 
 import { Brand, BrandDTO } from "../../domain/entities/brand";
 

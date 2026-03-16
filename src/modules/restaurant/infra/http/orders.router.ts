@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { httpGet, httpPost } from "@/shared/infra/http";
+import { httpGet, httpPost } from "@/core/infra/http";
 
 import { RestaurantUseCaseFactory } from "../../application/factories";
 import { OrderJsonPresenter } from "./presenters";

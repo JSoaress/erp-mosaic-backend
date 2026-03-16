@@ -2,8 +2,8 @@
 import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 import { PrimaryKey } from "ts-arch-kit/dist/core/models";
 
+import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { MosaicError, NotFoundModelError } from "@/shared/errors";
-import { IBaseRepositoryFactory, IRepository } from "@/shared/infra/database";
 import { Tenant } from "@/system/domain/entities/tenant";
 
 import { UseCase } from "../usecase";

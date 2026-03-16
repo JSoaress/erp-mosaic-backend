@@ -1,4 +1,4 @@
-import { IRepository } from "@/shared/infra/database";
+import { IRepository } from "@/shared/database";
 
 import { MeasurementUnit, MeasurementUnitDTO } from "../../domain/entities/measurement-unit";
 

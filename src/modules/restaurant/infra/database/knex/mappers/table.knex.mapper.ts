@@ -1,5 +1,5 @@
 import { Table } from "@/modules/restaurant/domain/entities/table";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexTableDTO } from "../models";
 

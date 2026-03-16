@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { EntityJsonPresenter, httpDelete, httpGet, httpPatch, httpPost } from "@/shared/infra/http";
+import { EntityJsonPresenter, httpDelete, httpGet, httpPatch, httpPost } from "@/core/infra/http";
 
 import { StockUseCaseFactory } from "../../application/factories";
 

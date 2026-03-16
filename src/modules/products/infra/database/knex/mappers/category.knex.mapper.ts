@@ -1,5 +1,5 @@
 import { Category } from "@/modules/products/domain/entities/category";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexCategoryDTO } from "../models";
 

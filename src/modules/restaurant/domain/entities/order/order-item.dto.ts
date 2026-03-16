@@ -1,6 +1,6 @@
 import { SharedSkuPriceDTO } from "@/core/contracts";
 import { EntityProps, Money, Quantity } from "@/shared/domain";
-import { foreignKey, ForeignKeySchema, z } from "@/shared/infra/libs/zod";
+import { foreignKey, ForeignKeySchema, z } from "@/shared/libs/zod";
 
 import { Attendant } from "../attendant";
 

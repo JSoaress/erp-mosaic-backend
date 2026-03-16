@@ -1,7 +1,7 @@
 import { parseNumber } from "ts-arch-kit/dist/core/helpers";
 
 import { Sku } from "@/modules/products/domain/entities/product";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexSkuDTO } from "../models";
 

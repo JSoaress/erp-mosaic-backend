@@ -3,9 +3,9 @@
 import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 import { IExists, ISetUnitOfWork, UnitOfWork } from "ts-arch-kit/dist/database";
 
+import { IBaseRepositoryFactory } from "@/shared/database";
 import { Entity } from "@/shared/domain";
 import { NotFoundModelError } from "@/shared/errors";
-import { IBaseRepositoryFactory } from "@/shared/infra/database";
 
 export class ForeignKeyValidationService {
     async validate(

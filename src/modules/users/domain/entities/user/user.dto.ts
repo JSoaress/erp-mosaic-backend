@@ -1,5 +1,5 @@
 import { EntityProps } from "@/shared/domain";
-import { z } from "@/shared/infra/libs/zod";
+import { z } from "@/shared/libs/zod";
 
 import { Password } from "./password";
 

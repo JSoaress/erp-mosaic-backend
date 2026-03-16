@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Knex } from "knex";
 import { parseNumber } from "ts-arch-kit/dist/core/helpers";
 import { PrimaryKey } from "ts-arch-kit/dist/core/models";
@@ -9,15 +10,14 @@ import {
     Where,
 } from "ts-arch-kit/dist/database";
 
-import { EntityProps } from "@/shared/domain";
+import { AbstractMapper, IRepository } from "@/shared/database";
+import { Entity } from "@/shared/domain";
 
-import { AbstractMapper } from "../../abstract-mapper";
-import { IRepository } from "../../repository.interface";
 import { KnexModel } from "../models";
 import { KnexDatabaseFilter } from "./knex-database-filter";
 
 export class DefaultKnexRepository<
-    TDomain extends EntityProps,
+    TDomain extends Entity<any>,
     TPersistence extends KnexModel,
 > implements IRepository<TDomain> {
     protected uow?: UnitOfWork<Knex.Transaction>;

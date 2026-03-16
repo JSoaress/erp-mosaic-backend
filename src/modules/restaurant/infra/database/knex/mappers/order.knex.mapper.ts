@@ -1,6 +1,6 @@
 import { Order, OrderItem, OrderStatusHistory } from "@/modules/restaurant/domain/entities/order";
 import { Money, Quantity } from "@/shared/domain";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexFullOrderDTO } from "../models";
 

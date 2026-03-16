@@ -9,7 +9,7 @@ import {
     MosaicError,
     ValidationError,
 } from "@/shared/errors";
-import { ZodValidator } from "@/shared/infra/libs/zod";
+import { ZodValidator } from "@/shared/libs/zod";
 
 import { IPasswordPolicy, Password } from "./password";
 import { CreateUserDTO, RestoreUserDTO, UserDTO, UserSchema } from "./user.dto";

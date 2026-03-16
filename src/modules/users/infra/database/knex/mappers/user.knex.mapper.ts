@@ -1,5 +1,5 @@
 import { Password, User } from "@/modules/users/domain/entities/user";
-import { AbstractMapper, TableFilterConfig } from "@/shared/infra/database";
+import { AbstractMapper, TableFilterConfig } from "@/shared/database";
 
 import { KnexUserDTO } from "../models";
 
