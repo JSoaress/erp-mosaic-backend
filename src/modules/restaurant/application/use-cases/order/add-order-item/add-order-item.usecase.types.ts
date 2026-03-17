@@ -4,8 +4,8 @@ import { PrimaryKey } from "ts-arch-kit/dist/core/models";
 import { IProductsContract } from "@/core/contracts";
 import { CreateOrderItemDTO, Order } from "@/modules/restaurant/domain/entities/order";
 import { AuthenticatedUser } from "@/modules/users/domain/entities/auth";
+import { UseCaseInput } from "@/shared/application";
 import { AddOrderItemError, NotFoundModelError, ValidationError } from "@/shared/errors";
-import { Tenant } from "@/system/domain/entities/tenant";
 
 import { IRepositoryFactory } from "../../../repositories";
 
@@ -14,10 +14,10 @@ export type AddOrderItemUseCaseGateway = {
     productsContract: IProductsContract;
 };
 
-export type AddOrderItemUseCaseInput = Pick<CreateOrderItemDTO, "orderId" | "quantity" | "notes"> & {
-    skuPriceId: PrimaryKey;
-    authenticatedUser: AuthenticatedUser;
-    tenant: Tenant;
-};
+export type AddOrderItemUseCaseInput = Pick<CreateOrderItemDTO, "orderId" | "quantity" | "notes"> &
+    UseCaseInput & {
+        skuPriceId: PrimaryKey;
+        authenticatedUser: AuthenticatedUser;
+    };
 
 export type AddOrderItemUseCaseOutput = Either<ValidationError | AddOrderItemError | NotFoundModelError, Order>;

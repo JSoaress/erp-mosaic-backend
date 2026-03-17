@@ -1,8 +1,8 @@
 import { Either } from "ts-arch-kit/dist/core/helpers";
 
+import { UseCaseInput } from "@/shared/application";
 import { IJwt } from "@/shared/application/adapters";
 import { InvalidCredentialsError } from "@/shared/errors";
-import { Tenant } from "@/system/domain/entities/tenant";
 
 import { IRepositoryFactory } from "../../../repositories";
 
@@ -11,10 +11,9 @@ export type AuthenticateUserUseCaseGateway = {
     jwtService: IJwt;
 };
 
-export type AuthenticateUserUseCaseInput = {
+export type AuthenticateUserUseCaseInput = UseCaseInput & {
     email: string;
     password: string;
-    tenant: Tenant;
 };
 
 export type AuthenticateUserUseCaseOutput = Either<InvalidCredentialsError, { jwt: string; refreshToken: string }>;

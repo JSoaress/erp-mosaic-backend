@@ -3,8 +3,8 @@ import { PrimaryKey } from "ts-arch-kit/dist/core/models";
 
 import { Order } from "@/modules/restaurant/domain/entities/order";
 import { AuthenticatedUser } from "@/modules/users/domain/entities/auth";
+import { UseCaseInput } from "@/shared/application";
 import { CancelOrderError, NotFoundModelError } from "@/shared/errors";
-import { Tenant } from "@/system/domain/entities/tenant";
 
 import { IRepositoryFactory } from "../../../repositories";
 
@@ -12,10 +12,9 @@ export type CancelOrderUseCaseGateway = {
     repositoryFactory: IRepositoryFactory;
 };
 
-export type CancelOrderUseCaseInput = {
+export type CancelOrderUseCaseInput = UseCaseInput & {
     id: PrimaryKey;
     authenticatedUser: AuthenticatedUser;
-    tenant: Tenant;
 };
 
 export type CancelOrderUseCaseOutput = Either<NotFoundModelError | CancelOrderError, Order>;
