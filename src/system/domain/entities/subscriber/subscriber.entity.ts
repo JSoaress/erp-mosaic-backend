@@ -1,10 +1,9 @@
 import { Either, left, right } from "ts-arch-kit/dist/core/helpers";
 
-import { Entity } from "@/shared/domain";
+import { Entity, Tenant } from "@/shared/domain";
 import { ValidationError } from "@/shared/errors";
 import { ZodValidator } from "@/shared/libs/zod";
 
-import { Tenant } from "../tenant";
 import { CreateSubscriberDTO, RestoreSubscriberDTO, SubscriberDTO, SubscriberSchema } from "./subscriber.dto";
 
 export class Subscriber extends Entity<SubscriberDTO> {
