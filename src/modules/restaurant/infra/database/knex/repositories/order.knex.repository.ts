@@ -1,9 +1,9 @@
 import type { Knex } from "knex";
 import { QueryOptions } from "ts-arch-kit/dist/database";
 
+import { DefaultKnexRepository } from "@/core/infra/database/knex/repositories";
 import { IOrderRepository } from "@/modules/restaurant/application/repositories";
 import { Order } from "@/modules/restaurant/domain/entities/order";
-import { DefaultKnexRepository } from "@/shared/infra/database/knex/repositories";
 
 import { OrderKnexMapper } from "../mappers";
 import { KnexFullOrderDTO, KnexOrderItemDTO, KnexOrderStatusHistoryDTO } from "../models";

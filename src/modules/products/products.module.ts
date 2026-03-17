@@ -1,21 +1,19 @@
 import path from "node:path";
 
-import { ContractsRegistry } from "@/core/contracts";
+import knexConfig from "@/core/infra/database/knex/knexfile";
+import { ResourceRegistry } from "@/core/module";
 import { ERPModule } from "@/core/module/erp-module.interface";
-import { ForeignKeyValidationService } from "@/shared/application/services";
-import knexConfig from "@/shared/infra/database/knex/knexfile";
 
 import { ProductsContract } from "./application/contracts";
 import { ProductsUseCaseFactory } from "./application/factories";
 import { ProductsKnexRepositoryFactory } from "./infra/database/knex";
 import { createRouter } from "./infra/http";
 
-export function buildProductsModule(contractRegistry: ContractsRegistry) {
+export function buildProductsModule(resourceRegistry: ResourceRegistry) {
     const repositoryFactory = new ProductsKnexRepositoryFactory(knexConfig.development);
-    const fkValidationService = new ForeignKeyValidationService();
     const productsContracts = new ProductsContract(repositoryFactory);
-    contractRegistry.register("products", productsContracts);
-    const useCaseFactory = new ProductsUseCaseFactory(repositoryFactory, fkValidationService);
+    resourceRegistry.get("contractsRegistry").register("products", productsContracts);
+    const useCaseFactory = new ProductsUseCaseFactory(repositoryFactory, resourceRegistry);
     const router = createRouter(useCaseFactory);
     const module = new ERPModule(
         { name: "products" },

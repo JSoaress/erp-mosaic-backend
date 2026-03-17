@@ -1,7 +1,7 @@
+import { DefaultKnexRepository } from "@/core/infra/database/knex/repositories";
 import { ISkuPriceRepository } from "@/modules/products/application/repositories";
 import { Sku } from "@/modules/products/domain/entities/product";
 import { SkuPrice } from "@/modules/products/domain/entities/sku-price";
-import { DefaultKnexRepository } from "@/shared/infra/database/knex/repositories";
 
 import { SkuPriceKnexMapper } from "../mappers";
 import { KnexSkuPriceDTO } from "../models";

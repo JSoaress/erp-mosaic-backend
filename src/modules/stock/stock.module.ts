@@ -1,8 +1,8 @@
 import path from "node:path";
 
+import knexConfig from "@/core/infra/database/knex/knexfile";
 import { ERPModule } from "@/core/module/erp-module.interface";
 import { ForeignKeyValidationService } from "@/shared/application/services";
-import knexConfig from "@/shared/infra/database/knex/knexfile";
 
 import { StockUseCaseFactory } from "./application/factories";
 import { StockKnexRepositoryFactory } from "./infra/database/knex";
@@ -15,7 +15,7 @@ export function buildStockModule() {
     const router = createRouter(useCaseFactory);
     const module = new ERPModule({ name: "stock" }, path.resolve(__dirname, "infra", "database", "knex", "migrations"), [], {
         prefix: "stock",
-        router,
+        privateRouter: router,
     });
     return module;
 }

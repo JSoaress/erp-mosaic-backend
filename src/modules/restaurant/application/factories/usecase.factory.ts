@@ -1,4 +1,5 @@
 import { IProductsContract } from "@/core/contracts";
+import { ResourceRegistry } from "@/core/module";
 import { ForeignKeyValidationService } from "@/shared/application/services";
 
 import { IRepositoryFactory } from "../repositories";
@@ -9,11 +10,16 @@ import { OpenOrderUseCase } from "../use-cases/order/open-order";
 import { CreateTableUseCase, DeleteTableUseCase, FetchTablesUseCase, UpdateTableUseCase } from "../use-cases/table";
 
 export class RestaurantUseCaseFactory {
+    private fkValidationService: ForeignKeyValidationService;
+    private productsContract: IProductsContract;
+
     constructor(
         private repositoryFactory: IRepositoryFactory,
-        private fkValidationService: ForeignKeyValidationService,
-        private productsContract: IProductsContract,
-    ) {}
+        resourceRegistry: ResourceRegistry,
+    ) {
+        this.fkValidationService = resourceRegistry.get("fkValidationService");
+        this.productsContract = resourceRegistry.get("contractsRegistry").resolve<IProductsContract>("products");
+    }
 
     fetchTablesUseCase() {
         return FetchTablesUseCase({ repositoryFactory: this.repositoryFactory });

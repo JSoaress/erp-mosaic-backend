@@ -1,3 +1,4 @@
+import { ResourceRegistry } from "@/core/module";
 import { ICache, IJwt } from "@/shared/application/adapters";
 
 import { IRepositoryFactory } from "../repositories";
@@ -6,11 +7,16 @@ import { CheckAuthenticatedUserUseCase } from "../use-cases/auth/check-authentic
 import { CreateInitialUserUseCase } from "../use-cases/user/create-initial-user";
 
 export class UsersUseCaseFactory {
+    private jwtService: IJwt;
+    private cache: ICache;
+
     constructor(
         private repositoryFactory: IRepositoryFactory,
-        private jwtService: IJwt,
-        private cache: ICache,
-    ) {}
+        resourceRegistry: ResourceRegistry,
+    ) {
+        this.jwtService = resourceRegistry.get("jwt");
+        this.cache = resourceRegistry.get("cache");
+    }
 
     createInitialUserUseCase(): CreateInitialUserUseCase {
         return new CreateInitialUserUseCase({ repositoryFactory: this.repositoryFactory });

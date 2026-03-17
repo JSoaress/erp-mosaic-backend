@@ -1,4 +1,4 @@
-import { KnexModel } from "@/shared/infra/database/knex/models";
+import { KnexModel } from "@/core/infra/database/knex/models";
 
 export type KnexBrandDTO = KnexModel & {
     name: string;

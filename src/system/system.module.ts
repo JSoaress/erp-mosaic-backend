@@ -1,5 +1,5 @@
+import knexConfig from "@/core/infra/database/knex/knexfile";
 import { ModuleRegistry } from "@/core/module/module-registry";
-import knexConfig from "@/shared/infra/database/knex/knexfile";
 
 import { SystemUseCaseFactory } from "./application/factories";
 import { SystemKnexRepositoryFactory } from "./infra/database/knex";

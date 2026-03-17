@@ -1,5 +1,5 @@
 import { UserStatus } from "@/modules/users/domain/entities/user";
-import { KnexModel } from "@/shared/infra/database/knex/models";
+import { KnexModel } from "@/core/infra/database/knex/models";
 
 export type KnexUserDTO = KnexModel & {
     name: string;

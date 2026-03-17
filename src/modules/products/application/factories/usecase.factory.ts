@@ -1,3 +1,4 @@
+import { ResourceRegistry } from "@/core/module";
 import { ForeignKeyValidationService } from "@/shared/application/services";
 
 import { IRepositoryFactory } from "../repositories";
@@ -29,10 +30,14 @@ import { FetchSkusUseCase } from "../use-cases/sku/fetch-skus";
 import { UpdateSkuUseCase } from "../use-cases/sku/update-sku";
 
 export class ProductsUseCaseFactory {
+    private fkValidationService: ForeignKeyValidationService;
+
     constructor(
         private repositoryFactory: IRepositoryFactory,
-        private fkValidationService: ForeignKeyValidationService,
-    ) {}
+        resourceRegistry: ResourceRegistry,
+    ) {
+        this.fkValidationService = resourceRegistry.get("fkValidationService");
+    }
 
     fetchBrandsUseCase(): FetchBrandsUseCase {
         return new FetchBrandsUseCase({ repositoryFactory: this.repositoryFactory });
