@@ -2,8 +2,8 @@ import { left, right } from "ts-arch-kit/dist/core/helpers";
 import { UnitOfWork } from "ts-arch-kit/dist/database";
 
 import { UseCase } from "@/shared/application";
-import { ISubscriberRepository, ITenantRepository } from "@/system/application/repositories";
-import { Subscriber } from "@/system/domain/entities/subscriber";
+import { ISubscriberRepository, ITenantRepository } from "@/platform/application/repositories";
+import { Subscriber } from "@/platform/domain/entities/subscriber";
 
 import {
     SubscribeToPlanUseCaseGateway,

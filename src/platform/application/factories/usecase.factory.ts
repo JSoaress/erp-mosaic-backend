@@ -5,7 +5,7 @@ import { ActiveModulesUseCase } from "../use-cases/subscriber/active-modules";
 import { GetSubscriberUseCase } from "../use-cases/subscriber/get-subscriber";
 import { SubscribeToPlanUseCase } from "../use-cases/subscriber/subscribe-to-plan";
 
-export class SystemUseCaseFactory {
+export class PlatformUseCaseFactory {
     constructor(
         private repositoryFactory: IRepositoryFactory,
         private moduleRegistry: ModuleRegistry,

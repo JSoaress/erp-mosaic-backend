@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import { TenantIdNotProvidedError } from "@/shared/errors";
-import { GetSubscriberUseCase } from "@/system/application/use-cases/subscriber/get-subscriber";
+import { GetSubscriberUseCase } from "@/platform/application/use-cases/subscriber/get-subscriber";
 
 export function getTenant(getSubscriberUseCase: GetSubscriberUseCase) {
     return async (req: Request, res: Response, next: NextFunction) => {

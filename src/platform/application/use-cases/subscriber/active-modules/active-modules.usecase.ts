@@ -3,8 +3,8 @@ import { UnitOfWork } from "ts-arch-kit/dist/database";
 
 import { UseCase } from "@/shared/application";
 import { NotFoundModelError } from "@/shared/errors";
-import { ISubscriberRepository } from "@/system/application/repositories";
-import { Subscriber } from "@/system/domain/entities/subscriber";
+import { ISubscriberRepository } from "@/platform/application/repositories";
+import { Subscriber } from "@/platform/domain/entities/subscriber";
 
 import {
     ActiveModulesUseCaseGateway,

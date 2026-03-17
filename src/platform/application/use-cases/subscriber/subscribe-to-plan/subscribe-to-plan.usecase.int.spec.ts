@@ -3,9 +3,9 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { ModuleRegistry } from "@/core/module/module-registry";
 import knexConfig from "@/shared/infra/database/knex/knexfile";
 import { KnexUnitOfWork } from "@/shared/infra/database/knex/repositories";
-import { IRepositoryFactory } from "@/system/application/repositories/repository-factory";
-import { Subscriber } from "@/system/domain/entities/subscriber";
-import { SystemKnexRepositoryFactory } from "@/system/infra/database/knex";
+import { IRepositoryFactory } from "@/platform/application/repositories/repository-factory";
+import { Subscriber } from "@/platform/domain/entities/subscriber";
+import { PlatformKnexRepositoryFactory } from "@/platform/infra/database/knex";
 
 import { SubscribeToPlanUseCase } from "./subscribe-to-plan.usecase";
 import { SubscribeToPlanUseCaseInput } from "./subscribe-to-plan.usecase.types";
@@ -15,7 +15,7 @@ let useCase: SubscribeToPlanUseCase;
 
 describe("subscribe to plan use case", () => {
     beforeAll(() => {
-        repositoryFactory = new SystemKnexRepositoryFactory(knexConfig.development);
+        repositoryFactory = new PlatformKnexRepositoryFactory(knexConfig.development);
         const moduleRegistry = new ModuleRegistry();
         useCase = new SubscribeToPlanUseCase({ repositoryFactory, moduleRegistry });
     });

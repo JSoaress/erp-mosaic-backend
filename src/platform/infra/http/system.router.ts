@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import { SystemUseCaseFactory } from "@/system/application/factories";
+import { PlatformUseCaseFactory } from "@/platform/application/factories";
 
-export function createSystemRouter(useCaseFactory: SystemUseCaseFactory): Router {
+export function createPlatformRouter(useCaseFactory: PlatformUseCaseFactory): Router {
     const router = Router();
 
     router.post("/subscribe", async (req, res, next) => {

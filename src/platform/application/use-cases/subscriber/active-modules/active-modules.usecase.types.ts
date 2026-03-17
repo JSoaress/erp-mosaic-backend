@@ -3,8 +3,8 @@ import { PrimaryKey } from "ts-arch-kit/dist/core/models";
 
 import { ModuleRegistry } from "@/core/module";
 import { NotFoundModelError, ValidationError } from "@/shared/errors";
-import { IRepositoryFactory } from "@/system/application/repositories/repository-factory";
-import { Subscriber } from "@/system/domain/entities/subscriber";
+import { IRepositoryFactory } from "@/platform/application/repositories/repository-factory";
+import { Subscriber } from "@/platform/domain/entities/subscriber";
 
 export type ActiveModulesUseCaseGateway = {
     repositoryFactory: IRepositoryFactory;

@@ -1,7 +1,7 @@
 import type { Knex } from "knex";
 import { DbTransactionNotPreparedError, UnitOfWork } from "ts-arch-kit/dist/database";
 
-import { ITenantRepository } from "@/system/application/repositories";
+import { ITenantRepository } from "@/platform/application/repositories";
 import { Tenant } from "@/system/domain/entities/tenant";
 
 export class TenantKnexRepository implements ITenantRepository {

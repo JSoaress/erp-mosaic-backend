@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { Subscriber } from "@/system/domain/entities/subscriber";
+import { Subscriber } from "@/platform/domain/entities/subscriber";
 
 import { ERPModule } from "./erp-module.interface";
 import { ModuleRegistry } from "./module-registry";

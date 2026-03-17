@@ -1,5 +1,5 @@
 import { AbstractMapper, TableFilterConfig } from "@/shared/database";
-import { Subscriber } from "@/system/domain/entities/subscriber";
+import { Subscriber } from "@/platform/domain/entities/subscriber";
 
 import { KnexSubscriberDTO } from "../models";
 

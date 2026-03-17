@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import { ValidationError } from "@/shared/errors";
 
-import { Tenant } from "../../../system/domain/entities/tenant/tenant.vo";
+import { Tenant } from "./tenant.vo";
 
 describe("tenant value object", () => {
     test("should create a new tenant", () => {
