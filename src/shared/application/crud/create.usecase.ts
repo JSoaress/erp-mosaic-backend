@@ -5,10 +5,9 @@ import { UnitOfWork } from "ts-arch-kit/dist/database";
 import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { Entity } from "@/shared/domain";
 import { MosaicError, NotFoundModelError, ValidationError } from "@/shared/errors";
-import { Tenant } from "@/system/domain/entities/tenant";
 
 import { ForeignKeyValidationService } from "../services";
-import { UseCase } from "../usecase";
+import { UseCase, UseCaseInput } from "../usecase";
 
 type CreateUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
@@ -17,9 +16,7 @@ type CreateUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     fkValidationService?: ForeignKeyValidationService;
 };
 
-export type CreateUseCaseInput = {
-    tenant: Tenant;
-};
+export type CreateUseCaseInput = UseCaseInput;
 
 export class CreateUseCase<
     TInput extends CreateUseCaseInput,

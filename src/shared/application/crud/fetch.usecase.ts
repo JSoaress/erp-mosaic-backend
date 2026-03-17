@@ -5,18 +5,16 @@ import { QueryOptions } from "ts-arch-kit/dist/database";
 import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { MosaicError } from "@/shared/errors";
 import { Pagination } from "@/shared/helpers";
-import { Tenant } from "@/system/domain/entities/tenant";
 
-import { UseCase } from "../usecase";
+import { UseCase, UseCaseInput } from "../usecase";
 
 type FetchUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
     repo: keyof Omit<Repo, "createUnitOfWork">;
 };
 
-export type FetchUseCaseInput = {
+export type FetchUseCaseInput = UseCaseInput & {
     queryOptions?: QueryOptions;
-    tenant: Tenant;
 };
 
 export type FetchUseCaseOutput = Either<MosaicError, Pagination<any>>;

@@ -2,7 +2,12 @@ import { IUseCase } from "ts-arch-kit/dist/core/application";
 import { BasicError } from "ts-arch-kit/dist/core/errors";
 import { Either, left } from "ts-arch-kit/dist/core/helpers";
 
+import { Tenant } from "../domain";
 import { MosaicError, UnknownError } from "../errors";
+
+export type UseCaseInput = {
+    tenant: Tenant;
+};
 
 export abstract class UseCase<TInput, TOutput extends Either<MosaicError, unknown>> implements IUseCase<TInput, TOutput> {
     async execute(input: TInput): Promise<TOutput> {

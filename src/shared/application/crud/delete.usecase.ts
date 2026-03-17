@@ -4,9 +4,8 @@ import { PrimaryKey } from "ts-arch-kit/dist/core/models";
 
 import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { MosaicError, NotFoundModelError } from "@/shared/errors";
-import { Tenant } from "@/system/domain/entities/tenant";
 
-import { UseCase } from "../usecase";
+import { UseCase, UseCaseInput } from "../usecase";
 
 type DeleteUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
@@ -14,9 +13,8 @@ type DeleteUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     entityName: string;
 };
 
-export type DeleteUseCaseInput = {
+export type DeleteUseCaseInput = UseCaseInput & {
     id: PrimaryKey;
-    tenant: Tenant;
     [key: string]: any;
 };
 
