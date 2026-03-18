@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from "express";
-import { BasicError } from "ts-arch-kit/dist/core/errors";
 import { HttpStatusCodes } from "ts-arch-kit/dist/http";
 
 import * as appErrors from "@/shared/errors";
 
 import { HttpRouteNotFoundError } from "./not-found-route.middleware";
 
-export function errorHandler(err: Error | BasicError, req: Request, res: Response, next: NextFunction) {
+export function errorHandler(err: Error | appErrors.MosaicError, req: Request, res: Response, next: NextFunction) {
+    if (!(err instanceof appErrors.MosaicError))
+        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message });
     switch (err.constructor) {
         // 401
         case appErrors.InvalidTokenError:
