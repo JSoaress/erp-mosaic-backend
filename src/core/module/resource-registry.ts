@@ -1,3 +1,6 @@
+/* eslint-disable max-classes-per-file */
+import type { Knex } from "knex";
+
 import { ForeignKeyValidationService } from "@/shared/application";
 import { ICache, IJwt } from "@/shared/application/adapters";
 
@@ -8,6 +11,7 @@ type AppResources = {
     cache: ICache;
     jwt: IJwt;
     contractsRegistry: ContractsRegistry;
+    db: Knex;
 };
 
 export class ResourceRegistry {
@@ -21,5 +25,19 @@ export class ResourceRegistry {
         const resource = this.resources.get(key);
         if (!resource) throw new Error(`Resource ${key} not found.`);
         return resource as AppResources[K];
+    }
+}
+
+export class TenantResourceRegistry extends ResourceRegistry {
+    constructor(private parent: ResourceRegistry) {
+        super();
+    }
+
+    get<K extends keyof AppResources>(key: K): AppResources[K] {
+        try {
+            return super.get(key);
+        } catch {
+            return this.parent.get(key);
+        }
     }
 }

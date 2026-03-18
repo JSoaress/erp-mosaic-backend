@@ -1,20 +1,20 @@
-import { ERPModule } from "./erp-module.interface";
+import { ERPModuleDefinition } from "./erp-module.interface";
 
 export class ModuleRegistry {
-    private modules = new Map<string, ERPModule>();
+    private modules = new Map<string, ERPModuleDefinition>();
 
-    register(module: ERPModule) {
+    register(module: ERPModuleDefinition) {
         const { name } = module.metadata;
         this.modules.set(name, module);
     }
 
-    get(name: string): ERPModule {
+    get(name: string): ERPModuleDefinition {
         const module = this.modules.get(name);
         if (!module) throw new Error(`Module ${name} not found.`);
         return module;
     }
 
-    list(): ERPModule[] {
+    list(): ERPModuleDefinition[] {
         return Array.from(this.modules.values());
     }
 }

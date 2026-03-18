@@ -1,81 +1,106 @@
 import { Router } from "express";
 
 import { Subscriber } from "@/platform/domain/entities/subscriber";
+import { Tenant } from "@/shared/domain";
 
-import { ERPModule } from "./erp-module.interface";
+import { KnexFactory } from "../infra/database/knex";
+import { ERPModuleInstance } from "./erp-module.interface";
 import { ModuleRegistry } from "./module-registry";
+import { ResourceRegistry, TenantResourceRegistry } from "./resource-registry";
 
 type TenantRouters = {
     publicRouter: Router;
     privateRouter: Router;
 };
 
+type TenantContext = {
+    tenant: Tenant;
+    subscriber: Subscriber;
+    registry: TenantResourceRegistry;
+    routers: TenantRouters;
+};
+
 export class ModuleLoader {
     private routerCache = new Map<string, TenantRouters>();
-    private routerPromises = new Map<string, Promise<TenantRouters>>();
-    private cache = new Map<string, Map<string, ERPModule>>();
+    // private routerPromises = new Map<string, Promise<TenantRouters>>();
+    private moduleInstanceCache = new Map<string, Map<string, ERPModuleInstance>>();
+    private tenantCtxCache = new Map<string, TenantContext>();
 
-    constructor(private registry: ModuleRegistry) {}
+    constructor(
+        private registry: ModuleRegistry,
+        private resourceRegistry: ResourceRegistry,
+        private knexFactory: KnexFactory,
+    ) {}
 
-    async loadForTenant(subscriber: Subscriber) {
-        // 1. Verifica cache
-        const tenantId = subscriber.getTenant().getName();
-        const cached = this.cache.get(tenantId);
+    async loadForTenant(ctx: TenantContext) {
+        const tenant = ctx.subscriber.getTenant();
+        const tenantId = tenant.getName();
+
+        const cached = this.moduleInstanceCache.get(tenantId);
         if (cached) return cached;
 
-        // 2. Descobre módulos habilitados no plano
-        const enabledModules = subscriber.get("enabledModules");
-
-        const tenantModules = new Map<string, ERPModule>();
+        const enabledModules = ctx.subscriber.get("enabledModules");
+        const instances = new Map<string, ERPModuleInstance>();
 
         // eslint-disable-next-line no-restricted-syntax
         for (const moduleName of enabledModules) {
-            const module = this.registry.get(moduleName);
-            // eslint-disable-next-line no-continue
-            if (!module) continue;
-
-            tenantModules.set(moduleName, module);
+            const definition = this.registry.get(moduleName);
+            // eslint-disable-next-line no-await-in-loop
+            const instance = await definition.build(ctx.registry);
+            instances.set(moduleName, instance);
         }
-
-        // 3. Salva no cache
-        this.cache.set(tenantId, tenantModules);
-
-        return tenantModules;
+        this.moduleInstanceCache.set(tenantId, instances);
+        return instances;
     }
 
     getRouterFromCache(tenant: string) {
         return this.routerCache.get(tenant);
     }
 
-    async getOrCreateRouter(subscriber: Subscriber): Promise<TenantRouters> {
-        const tenant = subscriber.getTenant().getName();
-        const cached = this.routerCache.get(tenant);
+    async getOrCreateTenantContext(subscriber: Subscriber): Promise<TenantContext> {
+        const tenant = subscriber.getTenant();
+        const tenantId = tenant.getName();
+
+        const cached = this.tenantCtxCache.get(tenantId);
         if (cached) return cached;
 
-        const building = this.routerPromises.get(tenant);
-        if (building) return building;
+        const tenantRegistry = new TenantResourceRegistry(this.resourceRegistry);
+        const db = this.knexFactory.getKnex(subscriber.getTenant());
+        // event bus
+        // outbox
+        // outbox processor
 
-        const promise = this.buildRouter(subscriber);
-        this.routerPromises.set(tenant, promise);
+        tenantRegistry.register("db", db);
+        // registrar event bus e outbox
 
-        const router = await promise;
-        this.routerCache.set(tenant, router);
-        this.routerPromises.delete(tenant);
+        const ctx: TenantContext = {
+            tenant,
+            subscriber,
+            registry: tenantRegistry,
+            routers: {} as TenantRouters,
+        };
 
-        return router;
+        const routers = await this.buildRouter(ctx);
+        ctx.routers = routers;
+
+        // start worker (simples)
+        // setInterval(() => outboxProcessor.run(), 1000)
+
+        this.tenantCtxCache.set(tenantId, ctx);
+        return ctx;
     }
 
-    private async buildRouter(subscriber: Subscriber): Promise<TenantRouters> {
-        const modules = await this.loadForTenant(subscriber);
+    private async buildRouter(ctx: TenantContext): Promise<TenantRouters> {
+        const modules = await this.loadForTenant(ctx);
         const publicRouter = Router();
         const privateRouter = Router();
         modules.values().forEach((module) => {
-            const { prefix, publicRouter: modulePublicRouter, privateRouter: modulePrivateRouter } = module.httpModule;
-            if (modulePublicRouter) {
-                console.log("registrando rotas publicas de", prefix);
-                publicRouter.use(`/${prefix}`, modulePublicRouter);
+            const { prefix, publicRouter: pub, privateRouter: priv, middlewares } = module.httpModule || {};
+            if (pub) publicRouter.use(`/${prefix}`, pub);
+            if (priv) {
+                if (middlewares?.authorization) privateRouter.use(middlewares.authorization);
+                privateRouter.use(`/${prefix}`, priv);
             }
-            if (modulePrivateRouter) privateRouter.use(`/${prefix}`, modulePrivateRouter);
         });
         return { publicRouter, privateRouter };
     }
