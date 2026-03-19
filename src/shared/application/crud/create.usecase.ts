@@ -7,7 +7,7 @@ import { Entity } from "@/shared/domain";
 import { MosaicError, NotFoundModelError, ValidationError } from "@/shared/errors";
 
 import { ForeignKeyValidationService } from "../services";
-import { UseCase, UseCaseInput } from "../usecase";
+import { UseCase } from "../usecase";
 
 type CreateUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
@@ -16,7 +16,7 @@ type CreateUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     fkValidationService?: ForeignKeyValidationService;
 };
 
-export type CreateUseCaseInput = UseCaseInput;
+export type CreateUseCaseInput = Record<string, unknown>;
 
 export class CreateUseCase<
     TInput extends CreateUseCaseInput,
@@ -27,8 +27,8 @@ export class CreateUseCase<
         super();
     }
 
-    protected async impl({ tenant, ...input }: TInput): Promise<TOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl(input: TInput): Promise<TOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const repository = (this.gateway.repositoryFactory[this.gateway.repo] as any)() as IRepository<any>;
         unitOfWork.prepare(repository);
         return unitOfWork.execute<TOutput>(async () => {

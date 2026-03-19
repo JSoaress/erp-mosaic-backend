@@ -5,7 +5,7 @@ import { PrimaryKey } from "ts-arch-kit/dist/core/models";
 import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { MosaicError, NotFoundModelError } from "@/shared/errors";
 
-import { UseCase, UseCaseInput } from "../usecase";
+import { UseCase } from "../usecase";
 
 type DeleteUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
@@ -13,7 +13,7 @@ type DeleteUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     entityName: string;
 };
 
-export type DeleteUseCaseInput = UseCaseInput & {
+export type DeleteUseCaseInput = {
     id: PrimaryKey;
     [key: string]: any;
 };
@@ -30,7 +30,7 @@ export class DeleteUseCase<
     }
 
     protected async impl(input: TInput): Promise<TOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(input.tenant);
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const repository = (this.gateway.repositoryFactory[this.gateway.repo] as any)() as IRepository<any>;
         unitOfWork.prepare(repository);
         return unitOfWork.execute<TOutput>(async () => {

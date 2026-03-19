@@ -12,9 +12,9 @@ export class CreateSkuUseCase extends UseCase<CreateSkuUseCaseInput, CreateSkuUs
         super();
     }
 
-    protected async impl({ tenant, ...input }: CreateSkuUseCaseInput): Promise<CreateSkuUseCaseOutput> {
+    protected async impl(input: CreateSkuUseCaseInput): Promise<CreateSkuUseCaseOutput> {
         const { repositoryFactory, fkServiceValidation } = this.gateway;
-        const unitOfWork = repositoryFactory.createUnitOfWork(tenant);
+        const unitOfWork = repositoryFactory.createUnitOfWork();
         const categoryRepository = repositoryFactory.createCategoryRepository();
         const skuRepository = repositoryFactory.createSkuRepository();
         unitOfWork.prepare(categoryRepository, skuRepository);

@@ -15,8 +15,8 @@ export class CancelOrderItemUseCase extends UseCase<CancelOrderItemUseCaseInput,
         super();
     }
 
-    protected async impl({ tenant, orderId, item }: CancelOrderItemUseCaseInput): Promise<CancelOrderItemUseCaseOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl({ orderId, item }: CancelOrderItemUseCaseInput): Promise<CancelOrderItemUseCaseOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const orderRepository = this.gateway.repositoryFactory.createOrderRepository();
         unitOfWork.prepare(orderRepository);
         return unitOfWork.execute<CancelOrderItemUseCaseOutput>(async () => {

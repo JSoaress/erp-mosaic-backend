@@ -12,9 +12,9 @@ export class UpdateSkuUseCase extends UseCase<UpdateSkuUseCaseInput, UpdateSkuUs
         super();
     }
 
-    protected async impl({ tenant, id, ...input }: UpdateSkuUseCaseInput): Promise<UpdateSkuUseCaseOutput> {
+    protected async impl({ id, ...input }: UpdateSkuUseCaseInput): Promise<UpdateSkuUseCaseOutput> {
         const { repositoryFactory, fkServiceValidation } = this.gateway;
-        const unitOfWork = repositoryFactory.createUnitOfWork(tenant);
+        const unitOfWork = repositoryFactory.createUnitOfWork();
         const categoryRepository = repositoryFactory.createCategoryRepository();
         const skuRepository = repositoryFactory.createSkuRepository();
         unitOfWork.prepare(categoryRepository, skuRepository);

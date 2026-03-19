@@ -15,9 +15,9 @@ export class CreateCategoryUseCase extends UseCase<CreateCategoryUseCaseInput, C
         super();
     }
 
-    protected async impl({ tenant, parentId, ...input }: CreateCategoryUseCaseInput): Promise<CreateCategoryUseCaseOutput> {
+    protected async impl({ parentId, ...input }: CreateCategoryUseCaseInput): Promise<CreateCategoryUseCaseOutput> {
         const { repositoryFactory } = this.gateway;
-        const uow = repositoryFactory.createUnitOfWork(tenant);
+        const uow = repositoryFactory.createUnitOfWork();
         const categoryRepository = repositoryFactory.createCategoryRepository();
         uow.prepare(categoryRepository);
         return uow.execute<CreateCategoryUseCaseOutput>(async () => {

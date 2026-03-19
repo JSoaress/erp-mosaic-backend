@@ -6,14 +6,14 @@ import { IBaseRepositoryFactory, IRepository } from "@/shared/database";
 import { MosaicError } from "@/shared/errors";
 import { Pagination } from "@/shared/helpers";
 
-import { UseCase, UseCaseInput } from "../usecase";
+import { UseCase } from "../usecase";
 
 type FetchUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
     repo: keyof Omit<Repo, "createUnitOfWork">;
 };
 
-export type FetchUseCaseInput = UseCaseInput & {
+export type FetchUseCaseInput = {
     queryOptions?: QueryOptions;
 };
 
@@ -28,8 +28,8 @@ export class FetchUseCase<
         super();
     }
 
-    protected async impl({ queryOptions, tenant }: TInput): Promise<TOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl({ queryOptions }: TInput): Promise<TOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const repository = (this.gateway.repositoryFactory[this.gateway.repo] as any)() as IRepository<any>;
         unitOfWork.prepare(repository);
         return unitOfWork.execute<TOutput>(async () => {

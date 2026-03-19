@@ -8,7 +8,7 @@ import { Entity } from "@/shared/domain";
 import { MosaicError, NotFoundModelError, ValidationError } from "@/shared/errors";
 
 import { ForeignKeyValidationService } from "../services";
-import { UseCase, UseCaseInput } from "../usecase";
+import { UseCase } from "../usecase";
 
 type UpdateUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     repositoryFactory: Repo;
@@ -17,7 +17,7 @@ type UpdateUseCaseGateway<Repo extends IBaseRepositoryFactory> = {
     fkValidationService?: ForeignKeyValidationService;
 };
 
-export type UpdateUseCaseInput = UseCaseInput & {
+export type UpdateUseCaseInput = {
     id: PrimaryKey;
     [key: string]: any;
 };
@@ -34,15 +34,14 @@ export class UpdateUseCase<
     }
 
     protected async impl(input: TInput): Promise<TOutput> {
-        const { tenant, ...rest } = input;
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const repository = (this.gateway.repositoryFactory[this.gateway.repo] as any)() as IRepository<Entity<any>>;
         unitOfWork.prepare(repository);
         return unitOfWork.execute<TOutput>(async () => {
             const filter = this.filterBy(input);
             const entity = await repository.findOne({ filter });
             if (!entity) return left(new NotFoundModelError(this.gateway.entityName, filter)) as TOutput;
-            const updateOrError = entity.update(rest);
+            const updateOrError = entity.update(input);
             if (updateOrError.isLeft()) return left(updateOrError.value) as TOutput;
             const fkResult = await this.validateForeignKey(unitOfWork, entity);
             if (fkResult.isLeft()) return left(fkResult.value) as TOutput;

@@ -14,8 +14,8 @@ export class AuthenticateUserUseCase extends UseCase<AuthenticateUserUseCaseInpu
         super();
     }
 
-    protected async impl({ tenant, ...input }: AuthenticateUserUseCaseInput): Promise<AuthenticateUserUseCaseOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl(input: AuthenticateUserUseCaseInput): Promise<AuthenticateUserUseCaseOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const userRepository = this.gateway.repositoryFactory.createUserRepository();
         unitOfWork.prepare(userRepository);
         return unitOfWork.execute<AuthenticateUserUseCaseOutput>(async () => {

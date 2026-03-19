@@ -1,7 +1,6 @@
 import { Either } from "ts-arch-kit/dist/core/helpers";
 
 import { AuthenticatedUser } from "@/modules/users/domain/entities/auth";
-import { UseCaseInput } from "@/shared/application";
 import { ICache, IJwt } from "@/shared/application/adapters";
 import { InvalidTokenError, NotFoundModelError } from "@/shared/errors";
 
@@ -13,7 +12,7 @@ export type CheckAuthenticatedUserUseCaseGateway = {
     cache: ICache;
 };
 
-export type CheckAuthenticatedUserUseCaseInput = UseCaseInput & {
+export type CheckAuthenticatedUserUseCaseInput = {
     token: string;
 };
 

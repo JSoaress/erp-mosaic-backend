@@ -16,14 +16,14 @@ export class AddOrderItemUseCase extends UseCase<AddOrderItemUseCaseInput, AddOr
         super();
     }
 
-    protected async impl({ tenant, orderId, ...input }: AddOrderItemUseCaseInput): Promise<AddOrderItemUseCaseOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl({ orderId, ...input }: AddOrderItemUseCaseInput): Promise<AddOrderItemUseCaseOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const orderRepository = this.gateway.repositoryFactory.createOrderRepository();
         unitOfWork.prepare(orderRepository);
         return unitOfWork.execute<AddOrderItemUseCaseOutput>(async () => {
             const order = await orderRepository.findById(orderId as number);
             if (!order) return left(new NotFoundModelError(Order.name, orderId));
-            const skuPriceOrError = await this.gateway.productsContract.getSkuPriceById(input.skuPriceId, tenant);
+            const skuPriceOrError = await this.gateway.productsContract.getSkuPriceById(input.skuPriceId);
             if (skuPriceOrError.isLeft()) return left(skuPriceOrError.value);
             const addOrderItemOrError = order.addItem({
                 attendant: new Attendant(input.authenticatedUser),

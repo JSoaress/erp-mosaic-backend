@@ -1,6 +1,5 @@
 import { Either } from "ts-arch-kit/dist/core/helpers";
 
-import { UseCaseInput } from "@/shared/application";
 import { IJwt } from "@/shared/application/adapters";
 import { InvalidCredentialsError } from "@/shared/errors";
 
@@ -11,7 +10,7 @@ export type AuthenticateUserUseCaseGateway = {
     jwtService: IJwt;
 };
 
-export type AuthenticateUserUseCaseInput = UseCaseInput & {
+export type AuthenticateUserUseCaseInput = {
     email: string;
     password: string;
 };

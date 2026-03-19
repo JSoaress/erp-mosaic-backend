@@ -15,9 +15,9 @@ export class UpdateCategoryUseCase extends UseCase<UpdateCategoryUseCaseInput, U
         super();
     }
 
-    protected async impl({ tenant, parentId, ...input }: UpdateCategoryUseCaseInput): Promise<UpdateCategoryUseCaseOutput> {
+    protected async impl({ parentId, ...input }: UpdateCategoryUseCaseInput): Promise<UpdateCategoryUseCaseOutput> {
         const { repositoryFactory } = this.gateway;
-        const uow = repositoryFactory.createUnitOfWork(tenant);
+        const uow = repositoryFactory.createUnitOfWork();
         const categoryRepository = repositoryFactory.createCategoryRepository();
         uow.prepare(categoryRepository);
         return uow.execute<UpdateCategoryUseCaseOutput>(async () => {

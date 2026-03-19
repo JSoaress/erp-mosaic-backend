@@ -14,8 +14,8 @@ export class CreateInitialUserUseCase extends UseCase<CreateInitialUserUseCaseIn
         super();
     }
 
-    protected async impl({ tenant, ...input }: CreateInitialUserUseCaseInput): Promise<CreateInitialUserUseCaseOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl(input: CreateInitialUserUseCaseInput): Promise<CreateInitialUserUseCaseOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const userRepository = this.gateway.repositoryFactory.createUserRepository();
         unitOfWork.prepare(userRepository);
         return unitOfWork.execute<CreateInitialUserUseCaseOutput>(async () => {

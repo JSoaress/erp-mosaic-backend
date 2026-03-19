@@ -13,8 +13,8 @@ export class OpenOrderUseCase extends UseCase<OpenOrderUseCaseInput, OpenOrderUs
         super();
     }
 
-    protected async impl({ tenant, ...input }: OpenOrderUseCaseInput): Promise<OpenOrderUseCaseOutput> {
-        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork(tenant);
+    protected async impl(input: OpenOrderUseCaseInput): Promise<OpenOrderUseCaseOutput> {
+        const unitOfWork = this.gateway.repositoryFactory.createUnitOfWork();
         const tableRepository = this.gateway.repositoryFactory.createTableRepository();
         const orderRepository = this.gateway.repositoryFactory.createOrderRepository();
         unitOfWork.prepare(tableRepository, orderRepository);
