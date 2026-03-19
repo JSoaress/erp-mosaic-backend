@@ -1,17 +1,13 @@
 import { Router } from "express";
 
+import { httpRouteResolvers } from "@/core/infra/http";
+
 import { UsersUseCaseFactory } from "../../application/factories";
 
-export function usersRouter(useCaseFactory: UsersUseCaseFactory): Router {
+export function usersRouter(factory: UsersUseCaseFactory): Router {
     const router = Router();
 
-    router.post("/superuser", async (req, res, next) => {
-        const { tenant } = req;
-        const useCase = useCaseFactory.createInitialUserUseCase();
-        const response = await useCase.execute({ ...req.body, tenant });
-        if (response.isLeft()) return next(response.value);
-        return res.status(201).json(response.value);
-    });
+    router.post("/superuser", httpRouteResolvers.create(factory.createInitialUserUseCase(), { map: { args: ["body"] } }));
 
     return router;
 }

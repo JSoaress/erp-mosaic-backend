@@ -1,18 +1,18 @@
 import { Router } from "express";
 
-import { EntityJsonPresenter, httpDelete, httpGet, httpPatch, httpPost } from "@/core/infra/http";
+import { EntityJsonPresenter, httpRouteResolvers } from "@/core/infra/http";
 
 import { RestaurantUseCaseFactory } from "../../application/factories";
 
-export function tablesRouter(useCaseFactory: RestaurantUseCaseFactory): Router {
+export function tablesRouter(factory: RestaurantUseCaseFactory): Router {
     const router = Router();
 
     const presenter = new EntityJsonPresenter();
+    const { query, create, mutation, delete: del } = httpRouteResolvers;
 
-    router.get("/", httpGet(useCaseFactory.fetchTablesUseCase(), { presenter }));
-    router.post("/", httpPost(useCaseFactory.createTableUseCase(), { presenter }));
-    router.patch("/:id", httpPatch(useCaseFactory.updateTableUseCase(), { presenter }));
-    router.delete("/:id", httpDelete(useCaseFactory.deleteTableUseCase()));
-
+    router.get("/", query(factory.fetchTablesUseCase(), { presenter }));
+    router.post("/", create(factory.createTableUseCase(), { presenter }));
+    router.patch("/:table", mutation(factory.updateTableUseCase(), { presenter, map: { id: ["params", "table"] } }));
+    router.delete("/:table", del(factory.deleteTableUseCase(), { map: { id: ["params", "table"] } }));
     return router;
 }

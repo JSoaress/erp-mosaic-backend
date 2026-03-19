@@ -1,18 +1,13 @@
 import { Router } from "express";
 
+import { httpRouteResolvers } from "@/core/infra/http";
+
 import { UsersUseCaseFactory } from "../../application/factories";
 
-export function authRouter(useCaseFactory: UsersUseCaseFactory): Router {
+export function authRouter(factory: UsersUseCaseFactory): Router {
     const router = Router();
 
-    router.post("/login", async (req, res, next) => {
-        const { tenant } = req;
-        const { email, password } = req.body;
-        const useCase = useCaseFactory.authenticateUserUseCase();
-        const response = await useCase.execute({ email, password, tenant });
-        if (response.isLeft()) return next(response.value);
-        return res.status(200).json(response.value);
-    });
+    router.post("/login", httpRouteResolvers.mutation(factory.createInitialUserUseCase(), { map: { args: ["body"] } }));
 
     return router;
 }

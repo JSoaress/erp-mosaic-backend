@@ -1,18 +1,19 @@
 import { Router } from "express";
 
-import { EntityJsonPresenter, httpDelete, httpGet, httpPatch, httpPost } from "@/core/infra/http";
+import { EntityJsonPresenter, httpRouteResolvers } from "@/core/infra/http";
 
 import { StockUseCaseFactory } from "../../application/factories";
 
-export function measurementUnitsRouter(useCaseFactory: StockUseCaseFactory): Router {
+export function measurementUnitsRouter(factory: StockUseCaseFactory): Router {
     const router = Router();
 
     const presenter = new EntityJsonPresenter();
+    const { query, create, mutation, delete: del } = httpRouteResolvers;
 
-    router.get("/", httpGet(useCaseFactory.fetchMeasurementUnitsUseCase(), { presenter }));
-    router.post("/", httpPost(useCaseFactory.createMeasurementUnitUseCase(), { presenter }));
-    router.patch("/:id", httpPatch(useCaseFactory.updateMeasurementUnitUseCase(), { presenter }));
-    router.delete("/:id", httpDelete(useCaseFactory.deleteMeasurementUnitUseCase()));
+    router.get("/", query(factory.fetchMeasurementUnitsUseCase(), { presenter }));
+    router.post("/", create(factory.createMeasurementUnitUseCase(), { presenter }));
+    router.patch("/:unit", mutation(factory.updateMeasurementUnitUseCase(), { presenter, map: { id: ["params", "unit"] } }));
+    router.delete("/:unit", del(factory.deleteMeasurementUnitUseCase(), { map: { id: ["params", "unit"] } }));
 
     return router;
 }
