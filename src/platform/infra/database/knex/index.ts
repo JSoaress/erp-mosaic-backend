@@ -1,1 +1,1 @@
-export * from "./system-knex.repository-factory";
+export * from "./platform-knex.repository-factory";
