@@ -9,6 +9,10 @@ type CacheEntry = {
 export class MemoryCache implements ICache {
     private store = new Map<string, CacheEntry>();
 
+    constructor() {
+        this.purge();
+    }
+
     private isExpired(entry: CacheEntry) {
         return entry.expiresAt !== undefined && entry.expiresAt < Date.now();
     }
@@ -52,5 +56,19 @@ export class MemoryCache implements ICache {
 
     async clear(): Promise<void> {
         this.store.clear();
+    }
+
+    private purge() {
+        setInterval(async () => {
+            const keysToDelete: string[] = [];
+            this.store.entries().forEach(([k, entry]) => {
+                if (this.isExpired(entry)) keysToDelete.push(k);
+            });
+            await Promise.all(
+                keysToDelete.map(async (key) => {
+                    await this.delete(key);
+                }),
+            );
+        }, 60 * 1000);
     }
 }
