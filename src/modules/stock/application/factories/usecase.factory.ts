@@ -1,3 +1,4 @@
+import { ResourceRegistry } from "@/core/module";
 import { ForeignKeyValidationService } from "@/shared/application/services";
 
 import { IRepositoryFactory } from "../repositories";
@@ -7,10 +8,14 @@ import { FetchMeasurementUnitsUseCase } from "../use-cases/measurement-unit/fetc
 import { UpdateMeasurementUnitUseCase } from "../use-cases/measurement-unit/update-measument-unit";
 
 export class StockUseCaseFactory {
+    private fkValidationService: ForeignKeyValidationService;
+
     constructor(
         private repositoryFactory: IRepositoryFactory,
-        private fkValidationService: ForeignKeyValidationService,
-    ) {}
+        resourceRegistry: ResourceRegistry,
+    ) {
+        this.fkValidationService = resourceRegistry.get("fkValidationService");
+    }
 
     fetchMeasurementUnitsUseCase(): FetchMeasurementUnitsUseCase {
         return new FetchMeasurementUnitsUseCase({ repositoryFactory: this.repositoryFactory });
