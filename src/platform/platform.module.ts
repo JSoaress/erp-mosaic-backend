@@ -10,5 +10,5 @@ export function buildPlatformModule(knexFactory: KnexFactory, moduleRegistry: Mo
     const repositoryFactory = new PlatformKnexRepositoryFactory(knexFactory.getKnex());
     const useCaseFactory = new PlatformUseCaseFactory(repositoryFactory, moduleRegistry);
     const router = createPlatformRouter(useCaseFactory);
-    return { router, getTenantMiddleware: getTenant(useCaseFactory.getSubscriberUseCase()) };
+    return { router, getTenantMiddleware: getTenant(() => useCaseFactory.getSubscriberUseCase()) };
 }
